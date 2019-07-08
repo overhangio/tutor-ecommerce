@@ -1,0 +1,10 @@
+pypi:
+  script:
+    - apk add --no-cache make
+    - pip3 install -U setuptools twine
+    - python3 setup.py sdist
+    - twine upload --skip-existing dist/tutor-ecommerce*.tar.gz
+  only:
+    - tags
+  tags:
+    - private

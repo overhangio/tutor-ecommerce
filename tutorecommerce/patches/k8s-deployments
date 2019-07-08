@@ -1,0 +1,66 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce
+  labels:
+    app.kubernetes.io/name: ecommerce
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ecommerce
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ecommerce
+    spec:
+      containers:
+        - name: ecommerce
+          image: {{ DOCKER_REGISTRY }}{{ ECOMMERCE_DOCKER_IMAGE }}
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DJANGO_SETTINGS_MODULE
+              value: ecommerce.settings.tutor
+          volumeMounts:
+            - mountPath: /openedx/ecommerce/ecommerce/settings/tutor.py
+              name: settings
+              subPath: tutor.py
+      volumes:
+        - name: settings
+          configMap:
+            name: ecommerce-settings
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce_worker
+  labels:
+    app.kubernetes.io/name: ecommerce_worker
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ecommerce_worker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ecommerce_worker
+    spec:
+      containers:
+        - name: ecommerce_worker
+          image: {{ DOCKER_REGISTRY }}{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}
+          ports:
+            - containerPort: 8000
+          env:
+            - name: WORKER_CONFIGURATION_MODULE
+              value: ecommerce_worker.configuration.tutor_worker
+            - name: C_FORCE_ROOT
+              value: "1"
+          volumeMounts:
+            - mountPath: /openedx/ecommerce_worker/ecommerce_worker/configuration/tutor_worker.py:ro
+              name: settings
+              subPath: tutor_worker.py
+      volumes:
+        - name: settings
+          configMap:
+            name: ecommerce_worker-settings

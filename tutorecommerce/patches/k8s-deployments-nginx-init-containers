@@ -1,0 +1,6 @@
+- name: init-ecommerce-staticfiles
+  image: {{ DOCKER_REGISTRY }}{{ ECOMMERCE_DOCKER_IMAGE }}
+  args: ['cp', '-r', '/openedx/ecommerce/assets/', '/var/www/ecommerce/assets']
+  volumeMounts:
+    - mountPath: /var/www/ecommerce/
+      name: ecommerce-staticfiles

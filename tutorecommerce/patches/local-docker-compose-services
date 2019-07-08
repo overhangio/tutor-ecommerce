@@ -1,0 +1,29 @@
+ecommerce:
+  image: {{ DOCKER_REGISTRY }}{{ ECOMMERCE_DOCKER_IMAGE }}
+  environment:
+    DJANGO_SETTINGS_MODULE: ecommerce.settings.tutor
+  restart: unless-stopped
+  volumes:
+    - ../plugins/ecommerce/apps/tutor.py:/openedx/ecommerce/ecommerce/settings/tutor.py:ro
+    - ../../data/ecommerce/media:/openedx/ecommerce/course_ecommerce/media
+  depends_on:
+    {% if ACTIVATE_LMS %}- lms{% endif %} # TODO decomment this
+    {% if ACTIVATE_MYSQL %}- mysql{% endif %}
+    - discovery
+
+ecommerce_worker:
+    image: {{ DOCKER_REGISTRY }}{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}
+    environment:
+      WORKER_CONFIGURATION_MODULE: ecommerce_worker.configuration.tutor_worker
+      C_FORCE_ROOT: "1"        
+    restart: unless-stopped
+    volumes:
+      - ../plugins/ecommerce/apps/tutor_worker.py:/openedx/ecommerce_worker/ecommerce_worker/configuration/tutor_worker.py:ro
+    depends_on:
+      - ecommerce
+        
+ecommerce-assets:
+    image: {{ DOCKER_REGISTRY }}{{ ECOMMERCE_DOCKER_IMAGE }}
+    volumes:
+      - ../../data/ecommerce:/var/www/ecommerce
+    command: sh -c "rm -rf /var/www/ecommerce/assets && cp -r /openedx/ecommerce/assets/ /var/www/ecommerce/"

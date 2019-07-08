@@ -1,0 +1,18 @@
+export DJANGO_SETTINGS_MODULE=lms.envs.tutor.production
+
+# Modify users created with an incorrect email and that might clash with the newly created users
+./manage.py lms shell -c \
+  "from django.contrib.auth import get_user_model;\
+  get_user_model().objects.filter(username='ecommerce').exclude(email='ecommerce@openedx').update(email='ecommerce@openedx')"
+
+./manage.py lms manage_user ecommerce ecommerce@openedx --staff --superuser
+
+./manage.py lms create_oauth2_client \
+    "http://ecommerce:8000" \
+    "http://ecommerce:8000/complete/edx-oidc/" \
+    confidential \
+    --client_name ecommerce \
+    --client_id {{ ECOMMERCE_OAUTH2_KEY }} \
+    --client_secret {{ ECOMMERCE_OAUTH2_SECRET }} \
+    --username ecommerce \
+    --trusted

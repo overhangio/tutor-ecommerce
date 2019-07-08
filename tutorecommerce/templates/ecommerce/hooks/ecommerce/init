@@ -1,0 +1,31 @@
+export DJANGO_SETTINGS_MODULE=ecommerce.settings.tutor
+./manage.py migrate --noinput
+./manage.py oscar_populate_countries --initial-only
+
+# Development site
+./manage.py create_or_update_site \
+  --site-id=1 \
+  --site-domain=ecommerce.localhost \
+  --partner-code=openedx \
+  --partner-name="Open edX" \
+  --lms-url-root=http://lms:8000 \
+  --client-side-payment-processor={{ ECOMMERCE_ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS|join(",") }} \
+  --payment-processors={{ ECOMMERCE_ENABLED_PAYMENT_PROCESSORS|join(",") }} \
+  --client-id="{{ ECOMMERCE_OAUTH2_KEY }}" \
+  --client-secret="{{ ECOMMERCE_OAUTH2_SECRET }}" \
+  --from-email {{ CONTACT_EMAIL }} \
+  --discovery_api_url=http://discovery:8000/api/v1/
+
+# Production site
+./manage.py create_or_update_site \
+  --site-id=2 \
+  --site-domain={{ ECOMMERCE_HOST }} \
+  --partner-code=openedx \
+  --partner-name="Open edX" \
+  --lms-url-root=http://lms:8000 \
+  --client-side-payment-processor={{ ECOMMERCE_ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS|join(",") }} \
+  --payment-processors={{ ECOMMERCE_ENABLED_PAYMENT_PROCESSORS|join(",") }} \
+  --client-id="{{ ECOMMERCE_OAUTH2_KEY }}" \
+  --client-secret="{{ ECOMMERCE_OAUTH2_SECRET }}" \
+  --from-email {{ CONTACT_EMAIL }} \
+  --discovery_api_url=http://discovery:8000/api/v1/
