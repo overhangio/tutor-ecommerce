@@ -51,7 +51,7 @@ Configuration
 ~~~~~~~~~~~~~
 
 - ``ECOMMERCE_HOST`` (default: ``"ecommerce.{{ LMS_HOST }}"``)
-- ``ECOMMERCE_PAYMENT_PROCESSORS`` (default: ``{cybersource: {}, paypal: {}}``)
+- ``ECOMMERCE_PAYMENT_PROCESSORS`` (default: ``{cybersource: {...}, paypal: {...}}`` See below for details.)
 - ``ECOMMERCE_ENABLED_PAYMENT_PROCESSORS``: (default: ``["cybersource", "paypal"]``)
 - ``ECOMMERCE_ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS`` (default: ``["cybersource"]``)
 - ``ECOMMERCE_EXTRA_PAYMENT_PROCESSOR_CLASSES`` (default: ``[]``)
@@ -68,6 +68,35 @@ Configuration
 - ``ECOMMERCE_API_TIMEOUT`` (default: ``5``)
 - ``ECOMMERCE_WORKER_JWT_ISSUER`` (default: ``"ecommerce_worker"``)
 - ``ECOMMERCE_EXTRA_PIP_REQUIREMENTS`` (default: ``[]``)
+
+You will need to modify the ``ECOMMERCE_PAYMENT_PROCESSORS`` parameter to configure your payment providers credentials. By default, it is equal to::
+  
+  cybersource:
+    access_key: SET-ME-PLEASE
+    cancel_page_url: /checkout/cancel-checkout/
+    merchant_id: SET-ME-PLEASE
+    payment_page_url: https://testsecureacceptance.cybersource.com/pay
+    profile_id: SET-ME-PLEASE
+    receipt_page_url: /checkout/receipt/
+    secret_key: SET-ME-PLEASE
+    send_level_2_3_details: true
+    soap_api_url: https://ics2wstest.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.140.wsdl
+    sop_access_key: SET-ME-PLEASE
+    sop_payment_page_url: https://testsecureacceptance.cybersource.com/silent/pay
+    sop_profile_id: SET-ME-PLEASE
+    sop_secret_key: SET-ME-PLEASE
+    transaction_key: SET-ME-PLEASE
+  paypal:
+    cancel_url: /checkout/cancel-checkout/
+    client_id: SET-ME-PLEASE
+    client_secret: SET-ME-PLEASE
+    error_url: /checkout/error/
+    mode: sandbox
+    receipt_url: /checkout/receipt/
+    
+We suggest you modify this configuration, save it to ``ecommerce-config.yml`` and then load it with::
+  
+  tutor config save --set "ECOMMERCE_PAYMENT_PROCESSORS=$(cat ecommerce-config.yml)"
 
 Image customisation
 ~~~~~~~~~~~~~~~~~~~
