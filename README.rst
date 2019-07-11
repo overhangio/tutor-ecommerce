@@ -36,7 +36,7 @@ Operations
 Creating a user
 ~~~~~~~~~~~~~~~
 
-The ecommerce user interface will be available at http://ecommerce.localhost for a local instance, and at ``ECOMMERCE_HOST`` (by  default: ``http(s)://ecommerce.<your lms host>) in production. In order to run commands from the UI, a user with admin rights must be created::
+The ecommerce user interface will be available at http://ecommerce.localhost for a local instance, and at ``ECOMMERCE_HOST`` (by  default: ``http(s)://ecommerce.<yours lms host>``) in production. In order to run commands from the UI, a user with admin rights must be created::
 
   tutor local run ecommerce ./manage.py createsuperuser
 
