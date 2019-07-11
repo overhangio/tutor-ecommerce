@@ -7,15 +7,18 @@ here = os.path.abspath(os.path.dirname(__file__))
 with io.open(os.path.join(here, "README.rst"), "rt", encoding="utf8") as f:
     readme = f.read()
 
+about = {}
+with io.open(os.path.join(here, "tutorecommerce", "__about__.py"), "rt", encoding="utf-8") as f:
+    exec(f.read(), about)
 
 setup(
     name="tutor-ecommerce",
-    version="0.1.1",
+    version=about["__version__"],
     url="https://docs.tutor.overhang.io/",
     project_urls={
         "Documentation": "https://docs.tutor.overhang.io/",
         "Code": "https://github.com/overhangio/tutor-ecommerce",
-        "Issue tracker": "https://github.com/overhangio/tutor/issues",
+        "Issue tracker": "https://github.com/overhangio/tutor-ecommerce/issues",
         "Community": "https://discuss.overhang.io",
     },
     license="AGPLv3",

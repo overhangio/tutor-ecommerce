@@ -1,6 +1,8 @@
 from glob import glob
 import os
 
+from .__about__ import __version__
+
 HERE = os.path.abspath(os.path.dirname(__file__))
 
 templates = os.path.join(HERE, "templates")
@@ -42,8 +44,9 @@ config = {
         "EXTRA_PAYMENT_PROCESSOR_CLASSES": [],
     },
     "defaults": {
-        "DOCKER_IMAGE": "overhangio/openedx-ecommerce:{{ TUTOR_VERSION }}",
-        "WORKER_DOCKER_IMAGE": "overhangio/openedx-ecommerce-worker:{{ TUTOR_VERSION }}",
+        "VERSION": __version__,
+        "DOCKER_IMAGE": "overhangio/openedx-ecommerce:{{ ECOMMERCE_VERSION }}",
+        "WORKER_DOCKER_IMAGE": "overhangio/openedx-ecommerce-worker:{{ ECOMMERCE_VERSION }}",
         "HOST": "ecommerce.{{ LMS_HOST }}",
         "MYSQL_DATABASE": "ecommerce",
         "MYSQL_USERNAME": "ecommerce",

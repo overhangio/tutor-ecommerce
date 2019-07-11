@@ -1,1 +1,2 @@
 recursive-include tutorecommerce/patches *
+recursive-include tutorecommerce/templates *
