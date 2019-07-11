@@ -1,4 +1,4 @@
-pypi:
+deploy:
   script:
     - apk add --no-cache make
     - pip3 install -U setuptools twine
