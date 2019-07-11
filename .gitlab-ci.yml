@@ -5,6 +5,7 @@ pypi:
     - python3 setup.py sdist
     - twine upload --skip-existing dist/tutor-ecommerce*.tar.gz
   only:
-    - tags
+    refs:
+      - master
   tags:
     - private
