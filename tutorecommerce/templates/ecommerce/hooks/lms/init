@@ -8,8 +8,8 @@ export DJANGO_SETTINGS_MODULE=lms.envs.tutor.production
 ./manage.py lms manage_user ecommerce ecommerce@openedx --staff --superuser
 
 ./manage.py lms create_oauth2_client \
-    "http://ecommerce:8000" \
-    "http://ecommerce:8000/complete/edx-oidc/" \
+    "{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://ecommerce.{{ LMS_HOST }}" \
+    "{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://ecommerce.{{ LMS_HOST }}/complete/edx-oidc/" \
     confidential \
     --client_name ecommerce \
     --client_id {{ ECOMMERCE_OAUTH2_KEY }} \
