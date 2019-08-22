@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import json
 from .production import *
 
@@ -76,6 +78,22 @@ COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = True
 
 PAYMENT_PROCESSOR_CONFIG = {
-    "openedx": json.loads("""{{ ECOMMERCE_PAYMENT_PROCESSORS|tojson(indent=4) }}""")
+    "edx": json.loads("""{{ ECOMMERCE_PAYMENT_PROCESSORS|tojson(indent=4) }}""")
 }
 PAYMENT_PROCESSORS = list(PAYMENT_PROCESSORS) + {{ ECOMMERCE_EXTRA_PAYMENT_PROCESSOR_CLASSES }}
+
+SCAR_DEFAULT_CURRENCY = 'CNY'
+CURRENCY_SYMBOL = '¥'
+ENABLE_ALIPAY_WECHATPAY = True
+
+if ENABLE_ALIPAY_WECHATPAY:
+    ALIPAY_INFO = PAYMENT_PROCESSOR_CONFIG.get('edx', {}).get('alipay', ALIPAY_INFO)
+    WECHAT_PAY_INFO = PAYMENT_PROCESSOR_CONFIG.get('edx', {}).get('wechatpay', WECHAT_PAY_INFO)
+    PAYMENT_PROCESSORS = list(PAYMENT_PROCESSORS)
+    PAYMENT_PROCESSORS.extend([
+        'ecommerce.extensions.payment.processors.alipay.AliPay',
+        'ecommerce.extensions.payment.processors.wechatpay.WechatPay',
+    ])
+    PAYMENT_PROCESSORS = tuple(PAYMENT_PROCESSORS)
+
+SITE_ID = 2

@@ -1,4 +1,4 @@
-from .base import *
+from .production import *
 
 LOGGING["handlers"]["local"] = {
     "class": "logging.handlers.WatchedFileHandler",

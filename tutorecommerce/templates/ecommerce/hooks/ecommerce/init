@@ -8,13 +8,13 @@ export DJANGO_SETTINGS_MODULE=ecommerce.settings.tutor
   --site-domain=ecommerce.localhost \
   --partner-code=openedx \
   --partner-name="Open edX" \
-  --lms-url-root=http://lms:8000 \
+  --lms-url-root=http://{{ LMS_HOST }} \
   --client-side-payment-processor={{ ECOMMERCE_ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS|join(",") }} \
   --payment-processors={{ ECOMMERCE_ENABLED_PAYMENT_PROCESSORS|join(",") }} \
   --client-id="{{ ECOMMERCE_OAUTH2_KEY }}" \
   --client-secret="{{ ECOMMERCE_OAUTH2_SECRET }}" \
   --from-email {{ CONTACT_EMAIL }} \
-  --discovery_api_url=http://discovery:8000/api/v1/
+  --discovery_api_url=http://discovery.{{ LMS_HOST }}/api/v1/
 
 # Production site
 ./manage.py create_or_update_site \
@@ -22,10 +22,12 @@ export DJANGO_SETTINGS_MODULE=ecommerce.settings.tutor
   --site-domain={{ ECOMMERCE_HOST }} \
   --partner-code=openedx \
   --partner-name="Open edX" \
-  --lms-url-root=http://lms:8000 \
+  --lms-url-root=http://{{ LMS_HOST }} \
   --client-side-payment-processor={{ ECOMMERCE_ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS|join(",") }} \
   --payment-processors={{ ECOMMERCE_ENABLED_PAYMENT_PROCESSORS|join(",") }} \
   --client-id="{{ ECOMMERCE_OAUTH2_KEY }}" \
   --client-secret="{{ ECOMMERCE_OAUTH2_SECRET }}" \
   --from-email {{ CONTACT_EMAIL }} \
-  --discovery_api_url=http://discovery:8000/api/v1/
+  --discovery_api_url=http://discovery.{{ LMS_HOST }}/api/v1/
+
+ ./manage.py waffle_switch     payment_processor_active_alipay on

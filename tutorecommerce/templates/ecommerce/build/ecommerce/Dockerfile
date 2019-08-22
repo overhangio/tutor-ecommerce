@@ -23,9 +23,12 @@ WORKDIR /openedx/ecommerce
 # nodejs requirements
 RUN npm install
 RUN ./node_modules/.bin/bower install --allow-root
-
+# Setup minimal yml config file, which is required by production settings
+RUN echo "{}" > /openedx/config.yml
+ENV ECOMMERCE_CFG /openedx/config.yml
 # python requirements
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt &&  pip install -r requirements/dev.txt
+
 {% for extra_requirement in ECOMMERCE_EXTRA_PIP_REQUIREMENTS %}RUN pip install {{ extra_requirement }}
 {% endfor %}
 # Collect static assets
@@ -36,9 +39,7 @@ RUN make theme_static
 RUN python manage.py collectstatic --noinput
 RUN python manage.py compress --force
 
-# Setup minimal yml config file, which is required by production settings
-RUN echo "{}" > /openedx/config.yml
-ENV ECOMMERCE_CFG /openedx/config.yml
+
 
 EXPOSE 8000
 CMD gunicorn --bind=0.0.0.0:8000 --workers 2 --max-requests=1000 ecommerce.wsgi:application
