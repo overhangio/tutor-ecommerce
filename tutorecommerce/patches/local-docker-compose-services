@@ -7,9 +7,9 @@ ecommerce:
     - ../plugins/ecommerce/apps/tutor.py:/openedx/ecommerce/ecommerce/settings/tutor.py:ro
     - ../../data/ecommerce/media:/openedx/ecommerce/course_ecommerce/media
   depends_on:
-    {% if ACTIVATE_LMS %}- lms{% endif %} # TODO decomment this
-    {% if ACTIVATE_MYSQL %}- mysql{% endif %}
+    - mysql
     - discovery
+    {% if ACTIVATE_LMS %}- lms{% endif %}
 
 ecommerce_worker:
     image: {{ DOCKER_REGISTRY }}{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}

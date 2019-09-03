@@ -67,7 +67,7 @@ hooks = {
         "ecommerce": "{{ ECOMMERCE_DOCKER_IMAGE }}",
         "ecommerce_worker": "{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
     },
-    "init": ["mysql-client", "lms", "ecommerce"],
+    "init": ["mysql", "lms", "ecommerce"],
 }
 
 
