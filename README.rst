@@ -104,8 +104,8 @@ Image customisation
 Ecommerce implementations vary a lot from one country to another. If all you need are the Paypal, Cybersource and Stripe payment processors, then it should not be necessary to customize the tutor-ecommerce docker image, which contains the vanilla Ecommerce platform. However, if you need to run a fork of Ecommerce, or install extra requirements, then you should re-build the docker image. To do so, first set the appropriate settings::
 
   tutor config save \
-    --set 'ENABLED_PAYMENT_PROCESSORS=["myprocessor"]' \
-    --set 'ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS=["myprocessor"]' \
+    --set 'ECOMMERCE_ENABLED_PAYMENT_PROCESSORS=["myprocessor"]' \
+    --set 'ECOMMERCE_ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS=["myprocessor"]' \
     --set 'ECOMMERCE_EXTRA_PAYMENT_PROCESSOR_CLASSES=["myextension.payment.MyProcessor"]' \
     --set 'ECOMMERCE_EXTRA_PIP_REQUIREMENTS=["git+https://github.com/myusername/myplugin"]'
 
