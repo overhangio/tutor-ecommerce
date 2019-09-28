@@ -1,0 +1,2 @@
+# E-commerce
+certbot certonly --standalone -n --agree-tos -m admin@{{ LMS_HOST }} -d {{ ECOMMERCE_HOST }}
