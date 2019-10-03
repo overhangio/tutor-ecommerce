@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import json
 from .production import *
 
@@ -31,6 +33,21 @@ JWT_AUTH = {
     ],
     "JWT_VERIFY_AUDIENCE": False,
     "JWT_DECODE_HANDLER": "ecommerce.extensions.api.handlers.jwt_decode_handler",
+}
+
+SOCIAL_AUTH_EDX_OIDC_SECRET = "{{ ECOMMERCE_OAUTH2_SECRET }}"
+SOCIAL_AUTH_EDX_OIDC_ID_TOKEN_DECRYPTION_KEY = SOCIAL_AUTH_EDX_OIDC_SECRET
+SOCIAL_AUTH_EDX_OIDC_ISSUER = "http://localhost:8000/oauth2"
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = {% if ACTIVATE_HTTPS %}True{% else %}False{% endif %}
+SOCIAL_AUTH_EDX_OIDC_KEY = "{{ ECOMMERCE_OAUTH2_KEY }}"
+SOCIAL_AUTH_EDX_OIDC_URL_ROOT = "{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/oauth2"
+SOCIAL_AUTH_EDX_OIDC_PUBLIC_URL_ROOT = SOCIAL_AUTH_EDX_OIDC_URL_ROOT
+SOCIAL_AUTH_EDX_OIDC_LOGOUT_URL = "{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/logout"
+SOCIAL_AUTH_EDX_OAUTH2_ISSUER = SOCIAL_AUTH_EDX_OIDC_URL_ROOT
+BACKEND_SERVICE_EDX_OAUTH2_PROVIDER_URL = SOCIAL_AUTH_EDX_OIDC_URL_ROOT
+
+EDX_DRF_EXTENSIONS = {
+    'OAUTH2_USER_INFO_URL': '{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/oauth2/user_info',
 }
 
 DATABASES = {
