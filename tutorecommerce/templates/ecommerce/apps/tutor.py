@@ -58,6 +58,9 @@ DATABASES = {
         "PASSWORD": "{{ ECOMMERCE_MYSQL_PASSWORD }}",
         "HOST": "{{ MYSQL_HOST }}",
         "PORT": "{{ MYSQL_PORT }}",
+        "OPTIONS": {
+            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
 
