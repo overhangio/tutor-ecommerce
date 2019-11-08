@@ -12,15 +12,17 @@ This plugin was developed and open sourced to the community thanks to the genero
 Installation
 ------------
 
-This plugin requires tutor>=3.6.0 and the Discovery plugin `tutor-discovery <https://github.com/overhangio/tutor-discovery>`__. Also, you should have installed tutor from source, and not from a pre-compiled binary.
+This plugin requires tutor>=3.6.0 and the Discovery plugin `tutor-discovery <https://github.com/overhangio/tutor-discovery>`__. If you have installed Tutor by downloading the pre-compiled binary, then both plugins should be automatically installed. You can confirm by running::
 
-::
+    tutor plugins list
+    
+But if you  have installed tutor from source, then you also need to install the plugin from source::
 
     pip install tutor-ecommerce
 
-Then, to enable this plugin, run::
+Then, in any case you need to enable the plugins::
 
-    tutor plugins enable ecommerce
+    tutor plugins enable discovery ecommerce
 
 Services will have to be re-configured and restarted, so you are probably better off just running quickstart again::
 
