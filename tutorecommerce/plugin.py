@@ -35,7 +35,7 @@ config = {
                 "client_id": "SET-ME-PLEASE",
                 "client_secret": "SET-ME-PLEASE",
                 "receipt_url": "/checkout/receipt/",
-                "cancel_url": "/checkout/cancel-checkout/",
+                "cancel_checkout_path": "/checkout/cancel-checkout/",
                 "error_url": "/checkout/error/",
             },
         },

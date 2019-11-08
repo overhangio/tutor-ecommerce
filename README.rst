@@ -87,7 +87,7 @@ You will need to modify the ``ECOMMERCE_PAYMENT_PROCESSORS`` parameter to config
     sop_secret_key: SET-ME-PLEASE
     transaction_key: SET-ME-PLEASE
   paypal:
-    cancel_url: /checkout/cancel-checkout/
+    cancel_checkout_path: /checkout/cancel-checkout/
     client_id: SET-ME-PLEASE
     client_secret: SET-ME-PLEASE
     error_url: /checkout/error/
