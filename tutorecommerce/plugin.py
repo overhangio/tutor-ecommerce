@@ -50,7 +50,6 @@ config = {
         "HOST": "ecommerce.{{ LMS_HOST }}",
         "MYSQL_DATABASE": "ecommerce",
         "MYSQL_USERNAME": "ecommerce",
-        "MYSQL_USERNAME": "ecommerce",
         "OAUTH2_KEY": "ecommerce",
         "API_TIMEOUT": 5,
         "WORKER_JWT_ISSUER": "ecommerce_worker",
