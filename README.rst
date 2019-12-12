@@ -65,7 +65,6 @@ Configuration
 - ``ECOMMERCE_WORKER_DOCKER_IMAGE`` (default: ``"overhangio/openedx-ecommerce-worker:{{ TUTOR_VERSION }}"``)
 - ``ECOMMERCE_MYSQL_DATABASE`` (default: ``"ecommerce"``)
 - ``ECOMMERCE_MYSQL_USERNAME`` (default: ``"ecommerce"``)
-- ``ECOMMERCE_MYSQL_USERNAME`` (default: ``"ecommerce"``)
 - ``ECOMMERCE_OAUTH2_KEY`` (default: ``"ecommerce"``)
 - ``ECOMMERCE_API_TIMEOUT`` (default: ``5``)
 - ``ECOMMERCE_WORKER_JWT_ISSUER`` (default: ``"ecommerce_worker"``)
