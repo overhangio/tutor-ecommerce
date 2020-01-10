@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM docker.io/ubuntu:18.04
 
 RUN apt update && \
   apt install -y git-core language-pack-en libmysqlclient-dev libssl-dev python python-pip python-virtualenv
