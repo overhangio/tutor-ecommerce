@@ -3,7 +3,7 @@ Ecommerce plugin for `Tutor <https://docs.tutor.overhang.io>`_
 
 This is a plugin for `Tutor <https://docs.tutor.overhang.io>`_ that integrates the `Ecommerce <https://github.com/edx/ecommerce/>`__ application in an Open edX platform.
 
-.. image:: https://overhang.io/images/clients/e-ducation.jpg
+.. image:: https://overhang.io/static/marketing/img/clients/e-ducation.jpg
     :alt: E-ducation
     :target: https://www.e-ducation.cn/
 
