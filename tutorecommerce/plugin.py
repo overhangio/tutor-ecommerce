@@ -59,12 +59,12 @@ config = {
 
 hooks = {
     "build-image": {
-        "ecommerce": "{{ ECOMMERCE_DOCKER_IMAGE }}",
-        "ecommerce_worker": "{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
+        "ecommerce": "{{ DOCKER_REGISTRY }}{{ ECOMMERCE_DOCKER_IMAGE }}",
+        "ecommerce_worker": "{{ DOCKER_REGISTRY }}{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
     },
     "remote-image": {
-        "ecommerce": "{{ ECOMMERCE_DOCKER_IMAGE }}",
-        "ecommerce_worker": "{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
+        "ecommerce": "{{ DOCKER_REGISTRY }}{{ ECOMMERCE_DOCKER_IMAGE }}",
+        "ecommerce_worker": "{{ DOCKER_REGISTRY }}{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
     },
     "init": ["mysql", "lms", "ecommerce"],
 }
