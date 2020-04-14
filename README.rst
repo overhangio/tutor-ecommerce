@@ -67,7 +67,7 @@ Configuration
 - ``ECOMMERCE_MYSQL_USERNAME`` (default: ``"ecommerce"``)
 - ``ECOMMERCE_OAUTH2_KEY`` (default: ``"ecommerce"``)
 - ``ECOMMERCE_API_TIMEOUT`` (default: ``5``)
-- ``ECOMMERCE_WORKER_JWT_ISSUER`` (default: ``"ecommerce_worker"``)
+- ``ECOMMERCE_WORKER_JWT_ISSUER`` (default: ``"ecommerce-worker"``)
 - ``ECOMMERCE_EXTRA_PIP_REQUIREMENTS`` (default: ``[]``)
 
 You will need to modify the ``ECOMMERCE_PAYMENT_PROCESSORS`` parameter to configure your payment providers credentials. By default, it is equal to::

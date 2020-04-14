@@ -6,7 +6,7 @@ build:ecommerce-images:
     - tutor plugins enable ecommerce
     - tutor config save
     - tutor images build ecommerce
-    - tutor images build ecommerce_worker
+    - tutor images build ecommerce-worker
   only:
     refs:
       - master
@@ -23,7 +23,7 @@ deploy:images:
     - tutor plugins enable ecommerce
     - tutor config save
     - tutor images push ecommerce
-    - tutor images push ecommerce_worker
+    - tutor images push ecommerce-worker
   only:
     refs:
       - master

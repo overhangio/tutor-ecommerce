@@ -52,7 +52,7 @@ config = {
         "MYSQL_USERNAME": "ecommerce",
         "OAUTH2_KEY": "ecommerce",
         "API_TIMEOUT": 5,
-        "WORKER_JWT_ISSUER": "ecommerce_worker",
+        "WORKER_JWT_ISSUER": "ecommerce-worker",
         "EXTRA_PIP_REQUIREMENTS": [],
     },
 }
@@ -60,11 +60,11 @@ config = {
 hooks = {
     "build-image": {
         "ecommerce": "{{ DOCKER_REGISTRY }}{{ ECOMMERCE_DOCKER_IMAGE }}",
-        "ecommerce_worker": "{{ DOCKER_REGISTRY }}{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
+        "ecommerce-worker": "{{ DOCKER_REGISTRY }}{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
     },
     "remote-image": {
         "ecommerce": "{{ DOCKER_REGISTRY }}{{ ECOMMERCE_DOCKER_IMAGE }}",
-        "ecommerce_worker": "{{ DOCKER_REGISTRY }}{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
+        "ecommerce-worker": "{{ DOCKER_REGISTRY }}{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
     },
     "init": ["mysql", "lms", "ecommerce"],
 }

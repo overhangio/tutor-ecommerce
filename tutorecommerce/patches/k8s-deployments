@@ -34,20 +34,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ecommerce_worker
+  name: ecommerce-worker
   labels:
-    app.kubernetes.io/name: ecommerce_worker
+    app.kubernetes.io/name: ecommerce-worker
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: ecommerce_worker
+      app.kubernetes.io/name: ecommerce-worker
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: ecommerce_worker
+        app.kubernetes.io/name: ecommerce-worker
     spec:
       containers:
-        - name: ecommerce_worker
+        - name: ecommerce-worker
           image: {{ DOCKER_REGISTRY }}{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}
           ports:
             - containerPort: 8000
@@ -63,4 +63,4 @@ spec:
       volumes:
         - name: settings
           configMap:
-            name: ecommerce_worker-settings
+            name: ecommerce-worker-settings
