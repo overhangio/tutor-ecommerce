@@ -1,44 +1,9 @@
-build:ecommerce-images:
-  script:
-    - apk add --no-cache docker
-    - python setup.py install
-    - tutor plugins enable discovery
-    - tutor plugins enable ecommerce
-    - tutor config save
-    - tutor images build ecommerce
-    - tutor images build ecommerce-worker
-  only:
-    refs:
-      - master
-  tags:
-    - private
-  stage: build
+variables:
+    TUTOR_PLUGIN: ecommerce
+    TUTOR_IMAGES: ecommerce ecommerce-worker
+    TUTOR_PYPI_PACKAGE: tutor-ecommerce
+    TUTOR_EXTRA_ENABLED_PLUGINS: discovery
 
-deploy:images:
-  script:
-    - apk add --no-cache docker
-    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-    - python setup.py install
-    - tutor plugins enable discovery
-    - tutor plugins enable ecommerce
-    - tutor config save
-    - tutor images push ecommerce
-    - tutor images push ecommerce-worker
-  only:
-    refs:
-      - master
-  tags:
-    - private
-  stage: deploy
-
-deploy:pypi:
-  script:
-    - pip3 install setuptools==41.6.0 twine==2.0.0
-    - python3 setup.py sdist
-    - twine upload --skip-existing dist/tutor-ecommerce*.tar.gz
-  only:
-    refs:
-      - master
-  tags:
-    - private
-  stage: deploy
+include:
+  - project: 'community/tutor-ci'
+    file: 'plugin-gitlab-ci.yml'
