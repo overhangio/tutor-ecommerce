@@ -57,7 +57,7 @@ spec:
             - name: C_FORCE_ROOT
               value: "1"
           volumeMounts:
-            - mountPath: /openedx/ecommerce_worker/ecommerce_worker/configuration/tutor_worker.py:ro
+            - mountPath: /openedx/ecommerce_worker/ecommerce_worker/configuration/tutor_worker.py
               name: settings
               subPath: tutor_worker.py
       volumes:
