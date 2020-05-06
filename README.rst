@@ -74,7 +74,7 @@ You will need to modify the ``ECOMMERCE_PAYMENT_PROCESSORS`` parameter to config
   
   cybersource:
     access_key: SET-ME-PLEASE
-    cancel_page_url: /checkout/cancel-checkout/
+    cancel_checkout_path: /checkout/cancel-checkout/
     merchant_id: SET-ME-PLEASE
     payment_page_url: https://testsecureacceptance.cybersource.com/pay
     profile_id: SET-ME-PLEASE

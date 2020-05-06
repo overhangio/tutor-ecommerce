@@ -22,7 +22,7 @@ config = {
                 "transaction_key": "SET-ME-PLEASE",
                 "payment_page_url": "https://testsecureacceptance.cybersource.com/pay",
                 "receipt_page_url": "/checkout/receipt/",
-                "cancel_page_url": "/checkout/cancel-checkout/",
+                "cancel_checkout_path": "/checkout/cancel-checkout/",
                 "soap_api_url": "https://ics2wstest.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.140.wsdl",
                 "send_level_2_3_details": True,
                 "sop_profile_id": "SET-ME-PLEASE",
