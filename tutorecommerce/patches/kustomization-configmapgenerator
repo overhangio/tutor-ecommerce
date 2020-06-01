@@ -1,6 +1,6 @@
 - name: ecommerce-settings
   files:
-    - plugins/ecommerce/apps/tutor.py
+    - plugins/ecommerce/apps/ecommerce/settings/production.py
 - name: ecommerce-worker-settings
   files:
-    - plugins/ecommerce/apps/tutor_worker.py
+    - plugins/ecommerce/apps/ecommerce-worker/settings/production.py

@@ -1,0 +1,10 @@
+ecommerce:
+  environment:
+    DJANGO_SETTINGS_MODULE: ecommerce.settings.tutor.development
+  command: ./manage.py runserver 0.0.0.0:8130
+  ports:
+    - "8130:8130"
+  networks:
+    default:
+      aliases:
+        - "{{ ECOMMERCE_HOST }}"

@@ -12,6 +12,7 @@ config = {
         "MYSQL_PASSWORD": "{{ 8|random_string }}",
         "SECRET_KEY": "{{ 20|random_string }}",
         "OAUTH2_SECRET": "{{ 8|random_string }}",
+        "OAUTH2_SECRET_SSO": "{{ 8|random_string }}",
         "API_KEY": "{{ 20|random_string }}",
         "PAYMENT_PROCESSORS": {
             "cybersource": {
@@ -51,8 +52,11 @@ config = {
         "MYSQL_DATABASE": "ecommerce",
         "MYSQL_USERNAME": "ecommerce",
         "OAUTH2_KEY": "ecommerce",
+        "OAUTH2_KEY_DEV": "ecommerce-dev",
+        "OAUTH2_KEY_SSO": "ecommerce-sso",
+        "OAUTH2_KEY_SSO_DEV": "ecommerce-sso-dev",
         "API_TIMEOUT": 5,
-        "WORKER_JWT_ISSUER": "ecommerce-worker",
+        "WORKER_JWT_ISSUER": "ecommerce-worker",# TODO do we need to keep this?
         "EXTRA_PIP_REQUIREMENTS": [],
     },
 }

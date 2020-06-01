@@ -21,11 +21,11 @@ spec:
             - containerPort: 8000
           env:
             - name: DJANGO_SETTINGS_MODULE
-              value: ecommerce.settings.tutor
+              value: ecommerce.settings.tutor.production
           volumeMounts:
-            - mountPath: /openedx/ecommerce/ecommerce/settings/tutor.py
+            - mountPath: /openedx/ecommerce/ecommerce/settings/tutor/production.py
               name: settings
-              subPath: tutor.py
+              subPath: production.py
       volumes:
         - name: settings
           configMap:
@@ -53,13 +53,13 @@ spec:
             - containerPort: 8000
           env:
             - name: WORKER_CONFIGURATION_MODULE
-              value: ecommerce_worker.configuration.tutor_worker
+              value: ecommerce_worker.configuration.tutor.production
             - name: C_FORCE_ROOT
               value: "1"
           volumeMounts:
-            - mountPath: /openedx/ecommerce_worker/ecommerce_worker/configuration/tutor_worker.py
+            - mountPath: /openedx/ecommerce_worker/ecommerce_worker/configuration/tutor/production.py
               name: settings
-              subPath: tutor_worker.py
+              subPath: production.py
       volumes:
         - name: settings
           configMap:

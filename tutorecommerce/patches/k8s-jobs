@@ -14,11 +14,11 @@ spec:
           image: {{ DOCKER_REGISTRY }}{{ ECOMMERCE_DOCKER_IMAGE }}
           env:
             - name: DJANGO_SETTINGS_MODULE
-              value: ecommerce.settings.tutor
+              value: ecommerce.settings.tutor.production
           volumeMounts:
-            - mountPath: /openedx/ecommerce/ecommerce/settings/tutor.py
+            - mountPath: /openedx/ecommerce/ecommerce/settings/tutor/production.py
               name: settings
-              subPath: tutor.py
+              subPath: production.py
       volumes:
         - name: settings
           configMap:

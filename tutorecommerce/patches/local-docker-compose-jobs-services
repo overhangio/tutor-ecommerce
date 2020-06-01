@@ -1,0 +1,7 @@
+ecommerce-job:
+    image: {{ DOCKER_REGISTRY }}{{ ECOMMERCE_DOCKER_IMAGE }}
+    environment:
+      DJANGO_SETTINGS_MODULE: ecommerce.settings.tutor
+    volumes:
+      - ../plugins/ecommerce/apps/tutor.py:/openedx/ecommerce/ecommerce/settings/tutor.py:ro
+    depends_on: {{ [("mysql", ACTIVATE_MYSQL)]|list_if }}

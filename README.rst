@@ -12,11 +12,11 @@ This plugin was developed and open sourced to the community thanks to the genero
 Installation
 ------------
 
-This plugin requires tutor>=3.6.0 and the Discovery plugin `tutor-discovery <https://github.com/overhangio/tutor-discovery>`__. If you have installed Tutor by downloading the pre-compiled binary, then both plugins should be automatically installed. You can confirm by running::
+This plugin requires tutor>=10.0.0 and the Discovery plugin `tutor-discovery <https://github.com/overhangio/tutor-discovery>`__. If you have installed Tutor by downloading the pre-compiled binary, then both plugins should be automatically installed. You can confirm by running::
 
     tutor plugins list
     
-But if you  have installed tutor from source, then you also need to install the plugin from source::
+But if you have installed tutor from source, then you also need to install the plugin from source::
 
     pip install tutor-ecommerce
 
@@ -38,16 +38,11 @@ Operations
 Creating a user
 ~~~~~~~~~~~~~~~
 
-The ecommerce user interface will be available at http://ecommerce.localhost for a local instance, and at ``ECOMMERCE_HOST`` (by  default: ``http(s)://ecommerce.<yours lms host>``) in production. In order to run commands from the UI, a user with admin rights must be created::
+The ecommerce user interface will be available at http://ecommerce.local.overhang.io for a local instance, and at ``ECOMMERCE_HOST`` (by  default: ``http(s)://ecommerce.<yours lms host>``) in production. In order to run commands from the UI, a user with admin rights must be created::
 
   tutor local run ecommerce ./manage.py createsuperuser
-
-Local development
-~~~~~~~~~~~~~~~~~
-
-For developing locally, it is necessary to configure the ecommerce service to be served from localhost::
-
-  tutor config save --set ECOMMERCE_HOST=ecommerce.localhost
+ 
+.. TODO it's strange that users who are staff on edx-platform are not staff on ecommerce
 
 Configuration
 ~~~~~~~~~~~~~

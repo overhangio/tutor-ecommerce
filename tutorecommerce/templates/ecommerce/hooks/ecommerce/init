@@ -1,33 +1,36 @@
-export DJANGO_SETTINGS_MODULE=ecommerce.settings.tutor
 ./manage.py migrate --noinput
 ./manage.py oscar_populate_countries --initial-only
 
-# Development site
 ./manage.py create_or_update_site \
   --site-id=1 \
-  --site-domain=ecommerce.localhost \
+  --site-domain={{ ECOMMERCE_HOST }}:8130 \
+  --site-name=dev \
   --partner-code=dev \
   --partner-name="Open edX - development" \
-  --lms-url-root=http://lms:8000 \
+  --lms-url-root="http://{{ LMS_HOST }}:8000" \
   --client-side-payment-processor={{ ECOMMERCE_ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS|join(",") }} \
   --payment-processors={{ ECOMMERCE_ENABLED_PAYMENT_PROCESSORS|join(",") }} \
-  --client-id="{{ ECOMMERCE_OAUTH2_KEY }}" \
-  --client-secret="{{ ECOMMERCE_OAUTH2_SECRET }}" \
+  --sso-client-id="{{ ECOMMERCE_OAUTH2_KEY_SSO_DEV }}" \
+  --sso-client-secret="{{ ECOMMERCE_OAUTH2_SECRET_SSO }}" \
+  --backend-service-client-id="{{ ECOMMERCE_OAUTH2_KEY_DEV }}" \
+  --backend-service-client-secret="{{ ECOMMERCE_OAUTH2_SECRET }}" \
   --from-email {{ CONTACT_EMAIL }} \
-  --discovery_api_url=http://discovery.localhost/api/v1/
+  --discovery_api_url=http://{{ DISCOVERY_HOST }}:8381/api/v1/
 
-{% if ECOMMERCE_HOST != "ecommerce.localhost" %}
 # Production site
 ./manage.py create_or_update_site \
   --site-id=2 \
   --site-domain={{ ECOMMERCE_HOST }} \
+  --site-name=prod \
   --partner-code=openedx \
   --partner-name="Open edX" \
-  --lms-url-root={% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }} \
+  --lms-url-root="{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}" \
+  --lms-public-url-root="{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}" \
   --client-side-payment-processor={{ ECOMMERCE_ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS|join(",") }} \
   --payment-processors={{ ECOMMERCE_ENABLED_PAYMENT_PROCESSORS|join(",") }} \
-  --client-id="{{ ECOMMERCE_OAUTH2_KEY }}" \
-  --client-secret="{{ ECOMMERCE_OAUTH2_SECRET }}" \
+  --sso-client-id="{{ ECOMMERCE_OAUTH2_KEY_SSO }}" \
+  --sso-client-secret="{{ ECOMMERCE_OAUTH2_SECRET_SSO }}" \
+  --backend-service-client-id="{{ ECOMMERCE_OAUTH2_KEY }}" \
+  --backend-service-client-secret="{{ ECOMMERCE_OAUTH2_SECRET }}" \
   --from-email {{ CONTACT_EMAIL }} \
   --discovery_api_url={% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ DISCOVERY_HOST }}/api/v1/
-{% endif %}

@@ -29,7 +29,7 @@ setup(
     packages=find_packages(exclude=["tests*"]),
     include_package_data=True,
     python_requires=">=3.5",
-    install_requires=["tutor-openedx", "tutor-discovery"],
+    install_requires=["tutor-openedx>=10.0.0,<11.0.0", "tutor-discovery"],
     entry_points={"tutor.plugin.v0": ["ecommerce = tutorecommerce.plugin"]},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
