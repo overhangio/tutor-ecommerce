@@ -21,7 +21,8 @@ RUN mkdir -p /openedx/ecommerce && \
 WORKDIR /openedx/ecommerce
 
 # nodejs requirements (aka: "make requirements.js")
-RUN npm install
+ARG NPM_REGISTRY=https://registry.npmjs.org/
+RUN npm install --verbose --registry=$NPM_REGISTRY
 RUN ./node_modules/.bin/bower install --allow-root
 
 # python requirements
