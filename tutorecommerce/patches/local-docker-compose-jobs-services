@@ -3,5 +3,5 @@ ecommerce-job:
     environment:
       DJANGO_SETTINGS_MODULE: ecommerce.settings.tutor.production
     volumes:
-      - ../plugins/ecommerce/apps/tutor.py:/openedx/ecommerce/ecommerce/settings/tutor.py:ro
+      - ../plugins/ecommerce/apps/ecommerce/settings:/openedx/ecommerce/ecommerce/settings/tutor:ro
     depends_on: {{ [("mysql", ACTIVATE_MYSQL)]|list_if }}
