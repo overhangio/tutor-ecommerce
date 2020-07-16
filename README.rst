@@ -15,7 +15,7 @@ Installation
 This plugin requires tutor>=10.0.0 and the Discovery plugin `tutor-discovery <https://github.com/overhangio/tutor-discovery>`__. If you have installed Tutor by downloading the pre-compiled binary, then both plugins should be automatically installed. You can confirm by running::
 
     tutor plugins list
-    
+
 But if you have installed tutor from source, then you also need to install the plugin from source::
 
     pip install tutor-ecommerce
@@ -41,7 +41,7 @@ Creating a user
 The ecommerce user interface will be available at http://ecommerce.local.overhang.io for a local instance, and at ``ECOMMERCE_HOST`` (by  default: ``http(s)://ecommerce.<yours lms host>``) in production. In order to run commands from the UI, a user with admin rights must be created::
 
   tutor local run ecommerce ./manage.py createsuperuser
- 
+
 .. TODO it's strange that users who are staff on edx-platform are not staff on ecommerce
 
 Configuration
@@ -60,13 +60,14 @@ Configuration
 - ``ECOMMERCE_WORKER_DOCKER_IMAGE`` (default: ``"overhangio/openedx-ecommerce-worker:{{ TUTOR_VERSION }}"``)
 - ``ECOMMERCE_MYSQL_DATABASE`` (default: ``"ecommerce"``)
 - ``ECOMMERCE_MYSQL_USERNAME`` (default: ``"ecommerce"``)
+- ``ECOMMERCE_CURRENCY`` (default: ``"USD"``)
 - ``ECOMMERCE_OAUTH2_KEY`` (default: ``"ecommerce"``)
 - ``ECOMMERCE_API_TIMEOUT`` (default: ``5``)
 - ``ECOMMERCE_WORKER_JWT_ISSUER`` (default: ``"ecommerce-worker"``)
 - ``ECOMMERCE_EXTRA_PIP_REQUIREMENTS`` (default: ``[]``)
 
 You will need to modify the ``ECOMMERCE_PAYMENT_PROCESSORS`` parameter to configure your payment providers credentials. By default, it is equal to::
-  
+
   cybersource:
     access_key: SET-ME-PLEASE
     cancel_checkout_path: /checkout/cancel-checkout/
@@ -89,9 +90,9 @@ You will need to modify the ``ECOMMERCE_PAYMENT_PROCESSORS`` parameter to config
     error_url: /checkout/error/
     mode: sandbox
     receipt_url: /checkout/receipt/
-    
+
 We suggest you modify this configuration, save it to ``ecommerce-config.yml`` and then load it with::
-  
+
   tutor config save --set "ECOMMERCE_PAYMENT_PROCESSORS=$(cat ecommerce-config.yml)"
 
 Image customisation

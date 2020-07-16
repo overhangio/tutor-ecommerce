@@ -8,6 +8,8 @@ ALLOWED_HOSTS = [
 PLATFORM_NAME = "{{ PLATFORM_NAME }}"
 PROTOCOL = "{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}"
 
+OSCAR_DEFAULT_CURRENCY = "{{ ECOMMERCE_CURRENCY }}"
+
 EDX_API_KEY = "{{ ECOMMERCE_API_KEY }}"
 {% set jwt_rsa_key = rsa_import_key(JWT_RSA_PRIVATE_KEY) %}
 JWT_AUTH["JWT_ISSUER"] = "{{ JWT_COMMON_ISSUER }}"

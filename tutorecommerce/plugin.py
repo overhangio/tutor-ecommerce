@@ -51,6 +51,7 @@ config = {
         "HOST": "ecommerce.{{ LMS_HOST }}",
         "MYSQL_DATABASE": "ecommerce",
         "MYSQL_USERNAME": "ecommerce",
+        "CURRENCY": "USD",
         "OAUTH2_KEY": "ecommerce",
         "OAUTH2_KEY_DEV": "ecommerce-dev",
         "OAUTH2_KEY_SSO": "ecommerce-sso",
