@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: ecommerce
-          image: {{ DOCKER_REGISTRY }}{{ ECOMMERCE_DOCKER_IMAGE }}
+          image: {{ ECOMMERCE_DOCKER_IMAGE }}
           ports:
             - containerPort: 8000
           env:
@@ -48,7 +48,7 @@ spec:
     spec:
       containers:
         - name: ecommerce-worker
-          image: {{ DOCKER_REGISTRY }}{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}
+          image: {{ ECOMMERCE_WORKER_DOCKER_IMAGE }}
           ports:
             - containerPort: 8000
           env:

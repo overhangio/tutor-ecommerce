@@ -1,5 +1,5 @@
 ecommerce-job:
-    image: {{ DOCKER_REGISTRY }}{{ ECOMMERCE_DOCKER_IMAGE }}
+    image: {{ ECOMMERCE_DOCKER_IMAGE }}
     environment:
       DJANGO_SETTINGS_MODULE: ecommerce.settings.tutor.production
     volumes:

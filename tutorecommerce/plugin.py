@@ -46,8 +46,8 @@ config = {
     },
     "defaults": {
         "VERSION": __version__,
-        "DOCKER_IMAGE": "overhangio/openedx-ecommerce:{{ ECOMMERCE_VERSION }}",
-        "WORKER_DOCKER_IMAGE": "overhangio/openedx-ecommerce-worker:{{ ECOMMERCE_VERSION }}",
+        "DOCKER_IMAGE": "{{ DOCKER_REGISTRY }}overhangio/openedx-ecommerce:{{ ECOMMERCE_VERSION }}",
+        "WORKER_DOCKER_IMAGE": "{{ DOCKER_REGISTRY }}overhangio/openedx-ecommerce-worker:{{ ECOMMERCE_VERSION }}",
         "HOST": "ecommerce.{{ LMS_HOST }}",
         "MYSQL_DATABASE": "ecommerce",
         "MYSQL_USERNAME": "ecommerce",
@@ -64,12 +64,12 @@ config = {
 
 hooks = {
     "build-image": {
-        "ecommerce": "{{ DOCKER_REGISTRY }}{{ ECOMMERCE_DOCKER_IMAGE }}",
-        "ecommerce-worker": "{{ DOCKER_REGISTRY }}{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
+        "ecommerce": "{{ ECOMMERCE_DOCKER_IMAGE }}",
+        "ecommerce-worker": "{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
     },
     "remote-image": {
-        "ecommerce": "{{ DOCKER_REGISTRY }}{{ ECOMMERCE_DOCKER_IMAGE }}",
-        "ecommerce-worker": "{{ DOCKER_REGISTRY }}{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
+        "ecommerce": "{{ ECOMMERCE_DOCKER_IMAGE }}",
+        "ecommerce-worker": "{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
     },
     "init": ["mysql", "lms", "ecommerce"],
 }
