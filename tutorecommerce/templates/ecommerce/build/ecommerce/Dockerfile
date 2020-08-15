@@ -27,6 +27,7 @@ RUN ./node_modules/.bin/bower install --allow-root
 
 # python requirements
 RUN pip install -r requirements.txt
+RUN pip install "whitenoise==5.1.0"
 {% for extra_requirement in ECOMMERCE_EXTRA_PIP_REQUIREMENTS %}RUN pip install {{ extra_requirement }}
 {% endfor %}
 # Collect static assets (aka: "make static")

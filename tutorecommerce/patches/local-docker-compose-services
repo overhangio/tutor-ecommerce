@@ -15,15 +15,9 @@ ecommerce-worker:
     image: {{ ECOMMERCE_WORKER_DOCKER_IMAGE }}
     environment:
       WORKER_CONFIGURATION_MODULE: ecommerce_worker.configuration.tutor.production
-      C_FORCE_ROOT: "1"        
+      C_FORCE_ROOT: "1"
     restart: unless-stopped
     volumes:
       - ../plugins/ecommerce/apps/ecommerce-worker/settings:/openedx/ecommerce_worker/ecommerce_worker/configuration/tutor:ro
     depends_on:
       - ecommerce
-        
-ecommerce-assets:
-    image: {{ ECOMMERCE_DOCKER_IMAGE }}
-    volumes:
-      - ../../data/ecommerce:/var/www/ecommerce
-    command: sh -c "rm -rf /var/www/ecommerce/assets && cp -r /openedx/ecommerce/assets/ /var/www/ecommerce/"
