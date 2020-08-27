@@ -15,7 +15,7 @@ ENV PATH /openedx/nodeenv/bin:${PATH}
 
 # Install ecommerce
 ARG ECOMMERCE_REPOSITORY=https://github.com/edx/ecommerce.git
-ARG ECOMMERCE_VERSION=open-release/juniper.2
+ARG ECOMMERCE_VERSION=open-release/juniper.3
 RUN mkdir -p /openedx/ecommerce && \
     git clone $ECOMMERCE_REPOSITORY --branch $ECOMMERCE_VERSION --depth 1 /openedx/ecommerce
 WORKDIR /openedx/ecommerce
