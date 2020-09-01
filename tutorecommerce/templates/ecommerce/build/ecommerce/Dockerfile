@@ -6,7 +6,7 @@ RUN apt update && \
 # Create python venv
 RUN mkdir /openedx/ && python3 -m venv /openedx/venv/
 ENV PATH "/openedx/venv/bin:$PATH"
-RUN pip install --upgrade pip setuptools
+RUN pip install setuptools==44.1.0 pip==20.0.2 wheel==0.34.2
 
 # Install a recent version of nodejs
 RUN pip install nodeenv
