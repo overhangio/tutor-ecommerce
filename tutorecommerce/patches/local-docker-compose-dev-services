@@ -3,7 +3,10 @@ ecommerce:
     DJANGO_SETTINGS_MODULE: ecommerce.settings.tutor.development
   command: ./manage.py runserver 0.0.0.0:8130
   ports:
-    - "8130:8130"
+    - "127.0.0.1:8130:8130"
+  volumes:
+    # editable requirements
+    - ../plugins/ecommerce/build/ecommerce/requirements:/openedx/requirements
   networks:
     default:
       aliases:

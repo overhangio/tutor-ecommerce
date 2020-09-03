@@ -136,3 +136,52 @@ Then, build the image, pointing to your fork if necessary::
   tutor images build ecommerce \
     -a ECOMMERCE_REPOSITORY=https://github.com/myusername/ecommerce \
     -a ECOMMERCE_VERSION=my/tag
+
+Development
+~~~~~~~~~~~
+
+When running Tutor in development mode, the ecommerce service is accessible at http://ecommerce.local.overhang.io:8130.
+
+To mount a local ecommerce repository in the ecommerce container, add the following content to the ``$(tutor config printroot)/env/dev/docker-compose.override.yml`` file::
+
+    version: "3.7"
+    services:
+      ecommerce:
+        volumes:
+          - /absolute/path/to/ecommerce:/openedx/ecommerce
+
+You will have to generate static assets in your local repository::
+
+    tutor dev run ecommerce npm install
+    tutor dev run ecommerce ./node_modules/.bin/bower install --allow-root
+    tutor dev run ecommerce python3 manage.py update_assets --skip-collect
+
+To attach a debugger to the ecommerce service, run::
+
+    tutor dev runserver ecommerce
+
+Implementing a custom payment processor
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To work on an extension to ecommerce, it is useful to run Tutor in development mode with hot-reload whenever the source code of dependencies changes. To do so, you should add the source code of your dependency to the requirements folder of the ecommerce Docker image. Then, add your custom dependency in editable mode to the development container image. For instance::
+
+    cd $(tutor config printroot)/env/plugins/ecommerce/build/ecommerce/requirements
+    cp -r /path/to/my/custom/myapp ./
+    echo "-e ./myapp" >> private.txt
+
+Then, rebuild the ecommerce docker image::
+
+    tutor images build ecommerce
+
+And run the ecommerce service in development mode::
+
+    tutor dev runserver ecommerce
+
+The "myapp" package should be installed inside the Docker image. This can be verified by running::
+
+    tutor dev run ecommerce ./manage.py shell -c "import myapp; print('ok')"
+
+License
+-------
+
+This work is licensed under the terms of the `GNU Affero General Public License (AGPL) <https://github.com/overhangio/ecommerce/blob/master/LICENSE.txt>`_.
