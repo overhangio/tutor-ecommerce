@@ -42,8 +42,6 @@ The ecommerce user interface will be available at http://ecommerce.local.overhan
 
   tutor local run ecommerce ./manage.py createsuperuser
 
-.. TODO it's strange that users who are staff on edx-platform are not staff on ecommerce
-
 Configuration
 ~~~~~~~~~~~~~
 
@@ -94,6 +92,33 @@ You will need to modify the ``ECOMMERCE_PAYMENT_PROCESSORS`` parameter to config
 We suggest you modify this configuration, save it to ``ecommerce-config.yml`` and then load it with::
 
   tutor config save --set "ECOMMERCE_PAYMENT_PROCESSORS=$(cat ecommerce-config.yml)"
+
+Using a custom payment processor
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In order to point to a custom payment processor, named "custompayment", you will first need to add it to the list of enabled payment processors::
+
+    tutor config save --set 'ECOMMERCE_ENABLED_PAYMENT_PROCESSORS=["custompayment"]'
+
+If this is a client-side payment processor, you should also add it to the list of enabled client-side payment processors::
+
+    tutor config save --set 'ECOMMERCE_ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS=["custompayment"]'
+
+If you need to enable additional ecommerce urls::
+
+    tutor config save --set 'ECOMMERCE_ENABLED_CLIENT_SIDE_PAYMENT_URLS={"custompayment": "ecommerce.extensions.payment.processors.custompayment.urls"}'
+
+Point to the processor class::
+
+    tutor config save --set 'ECOMMERCE_EXTRA_PAYMENT_PROCESSOR_CLASSES=["ecommerce.extensions.payment.processors.custompayment.CustomPayment"]'
+
+Run initialisation scripts to create the right sites and partners::
+
+    tutor local init --limit=ecommerce
+
+Enable the payment processor by creating a waffle switch::
+
+    tutor local run ecommerce ./manage.py waffle_switch --create payment_processor_active_custompayment on
 
 Image customisation
 ~~~~~~~~~~~~~~~~~~~

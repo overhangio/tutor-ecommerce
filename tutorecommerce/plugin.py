@@ -43,6 +43,7 @@ config = {
         "ENABLED_PAYMENT_PROCESSORS": ["cybersource", "paypal"],
         "ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS": ["cybersource"],
         "EXTRA_PAYMENT_PROCESSOR_CLASSES": [],
+        "EXTRA_PAYMENT_PROCESSOR_URLS": {},
     },
     "defaults": {
         "VERSION": __version__,
@@ -57,7 +58,7 @@ config = {
         "OAUTH2_KEY_SSO": "ecommerce-sso",
         "OAUTH2_KEY_SSO_DEV": "ecommerce-sso-dev",
         "API_TIMEOUT": 5,
-        "WORKER_JWT_ISSUER": "ecommerce-worker",# TODO do we need to keep this?
+        "WORKER_JWT_ISSUER": "ecommerce-worker",  # TODO do we need to keep this?
         "EXTRA_PIP_REQUIREMENTS": [],
     },
 }

@@ -1,7 +1,7 @@
 FROM docker.io/ubuntu:18.04
 
 RUN apt update && \
-  apt install -y git-core language-pack-en libmysqlclient-dev libssl-dev python3 python3-pip python3-venv
+  apt install -y curl git-core language-pack-en libmysqlclient-dev libssl-dev python3 python3-pip python3-venv
 
 # Create python venv
 RUN mkdir /openedx/ && python3 -m venv /openedx/venv/
@@ -19,6 +19,14 @@ ARG ECOMMERCE_VERSION=open-release/juniper.3
 RUN mkdir -p /openedx/ecommerce && \
     git clone $ECOMMERCE_REPOSITORY --branch $ECOMMERCE_VERSION --depth 1 /openedx/ecommerce
 WORKDIR /openedx/ecommerce
+
+# Fix a few issues, and improve custom server-side payment processor extensibility
+# https://github.com/edx/ecommerce/pull/3140
+# https://github.com/overhangio/ecommerce/commits/overhangio/improve-extensibility
+RUN curl https://github.com/overhangio/ecommerce/commit/79b1ff4b2be50ac86560500a85788f747ea80aaf.patch | git apply -
+RUN curl https://github.com/overhangio/ecommerce/commit/f0d57fc6fddf9ba62fdb59c445815f5914ac2cdc.patch | git apply -
+RUN curl https://github.com/overhangio/ecommerce/commit/385bcf5ac86619ed48e6c98ffc8b6f7f4ca7f917.patch | git apply -
+RUN curl https://github.com/overhangio/ecommerce/commit/e18da93ad338cfd15b8c53f83c0dd2ee6bcec372.patch | git apply -
 
 # nodejs requirements (aka: "make requirements.js")
 ARG NPM_REGISTRY=https://registry.npmjs.org/
