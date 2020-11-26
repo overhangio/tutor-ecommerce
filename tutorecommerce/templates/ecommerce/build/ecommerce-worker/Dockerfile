@@ -1,4 +1,4 @@
-FROM docker.io/ubuntu:18.04
+FROM docker.io/ubuntu:20.04
 
 RUN apt update && \
   apt install -y git-core language-pack-en python3 python3-pip python3-venv

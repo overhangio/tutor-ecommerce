@@ -1,3 +1,0 @@
-- mountPath: /var/www/ecommerce/
-  name: ecommerce-staticfiles
-  readOnly: true

@@ -1,4 +1,4 @@
-FROM docker.io/ubuntu:18.04
+FROM docker.io/ubuntu:20.04
 
 RUN apt update && \
   apt install -y curl git-core language-pack-en libmysqlclient-dev libssl-dev python3 python3-pip python3-venv
@@ -23,9 +23,9 @@ WORKDIR /openedx/ecommerce
 # Fix a few issues, and improve custom server-side payment processor extensibility
 # https://github.com/edx/ecommerce/pull/3140
 # https://github.com/overhangio/ecommerce/commits/overhangio/improve-extensibility
-RUN curl https://github.com/overhangio/ecommerce/commit/79b1ff4b2be50ac86560500a85788f747ea80aaf.patch | git apply -
-RUN curl https://github.com/overhangio/ecommerce/commit/f0d57fc6fddf9ba62fdb59c445815f5914ac2cdc.patch | git apply -
-RUN curl https://github.com/overhangio/ecommerce/commit/385bcf5ac86619ed48e6c98ffc8b6f7f4ca7f917.patch | git apply -
+RUN curl https://github.com/overhangio/ecommerce/commit/ba8aaf4b77c8351ea16b69f8b077cfeaab824fc3.patch | git apply -
+RUN curl https://github.com/overhangio/ecommerce/commit/e5d5bdc5dc501a85d08d4fd7e534a9b939a16955.patch | git apply -
+RUN curl https://github.com/overhangio/ecommerce/commit/e788b836a899f168eeb28a213bddb9d2ca6a44c8.patch | git apply -
 RUN curl https://github.com/overhangio/ecommerce/commit/e18da93ad338cfd15b8c53f83c0dd2ee6bcec372.patch | git apply -
 
 # nodejs requirements (aka: "make requirements.js")
@@ -35,7 +35,7 @@ RUN ./node_modules/.bin/bower install --allow-root
 
 # python requirements
 RUN pip install -r requirements.txt
-RUN pip install "whitenoise==5.1.0"
+RUN pip install uwsgi==2.0.19.1
 
 # Install private requirements: this is useful for installing custom payment processors.
 COPY ./requirements/ /openedx/requirements
@@ -59,4 +59,12 @@ RUN echo "{}" > /openedx/config.yml
 ENV ECOMMERCE_CFG /openedx/config.yml
 
 EXPOSE 8000
-CMD gunicorn --bind=0.0.0.0:8000 --workers 2 --max-requests=1000 ecommerce.wsgi:application
+CMD uwsgi \
+    --static-map /static=/openedx/ecommerce/assets \
+    --static-map /media=/openedx/ecommerce/course_ecommerce/media \
+    --http 0.0.0.0:8000 \
+    --thunder-lock \
+    --single-interpreter \
+    --enable-threads \
+    --processes=2 \
+    --wsgi-file ecommerce/wsgi.py

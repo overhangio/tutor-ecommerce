@@ -1,2 +1,0 @@
-- name: ecommerce-staticfiles
-  emptyDir: {}

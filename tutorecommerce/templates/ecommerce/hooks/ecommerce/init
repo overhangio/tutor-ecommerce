@@ -24,8 +24,8 @@
   --site-name=prod \
   --partner-code=openedx \
   --partner-name="Open edX" \
-  --lms-url-root="{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}" \
-  --lms-public-url-root="{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}" \
+  --lms-url-root="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}" \
+  --lms-public-url-root="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}" \
   --client-side-payment-processor={{ ECOMMERCE_ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS|join(",") }} \
   --payment-processors={{ ECOMMERCE_ENABLED_PAYMENT_PROCESSORS|join(",") }} \
   --sso-client-id="{{ ECOMMERCE_OAUTH2_KEY_SSO }}" \
@@ -33,4 +33,4 @@
   --backend-service-client-id="{{ ECOMMERCE_OAUTH2_KEY }}" \
   --backend-service-client-secret="{{ ECOMMERCE_OAUTH2_SECRET }}" \
   --from-email {{ CONTACT_EMAIL }} \
-  --discovery_api_url={% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ DISCOVERY_HOST }}/api/v1/
+  --discovery_api_url={% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ DISCOVERY_HOST }}/api/v1/

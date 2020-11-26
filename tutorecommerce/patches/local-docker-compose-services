@@ -5,11 +5,10 @@ ecommerce:
   restart: unless-stopped
   volumes:
     - ../plugins/ecommerce/apps/ecommerce/settings:/openedx/ecommerce/ecommerce/settings/tutor:ro
-    - ../../data/ecommerce/media:/openedx/ecommerce/course_ecommerce/media
   depends_on:
-    - mysql
     - discovery
-    {% if ACTIVATE_LMS %}- lms{% endif %}
+    {% if RUN_MYSQL %}- mysql{% endif %}
+    {% if RUN_LMS %}- lms{% endif %}
 
 ecommerce-worker:
     image: {{ ECOMMERCE_WORKER_DOCKER_IMAGE }}

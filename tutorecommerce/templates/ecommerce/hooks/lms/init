@@ -30,7 +30,7 @@
 # Production client
 ./manage.py lms create_dot_application \
   --grant-type client-credentials \
-  --redirect-uris "{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ ECOMMERCE_HOST }}/complete/edx-oauth2/" \
+  --redirect-uris "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ ECOMMERCE_HOST }}/complete/edx-oauth2/" \
   --client-id {{ ECOMMERCE_OAUTH2_KEY }} \
   --client-secret {{ ECOMMERCE_OAUTH2_SECRET }} \
   --scopes user_id \
@@ -40,7 +40,7 @@
   ecommerce
 ./manage.py lms create_dot_application \
   --grant-type authorization-code \
-  --redirect-uris "{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ ECOMMERCE_HOST }}/complete/edx-oauth2/" \
+  --redirect-uris "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ ECOMMERCE_HOST }}/complete/edx-oauth2/" \
   --client-id {{ ECOMMERCE_OAUTH2_KEY_SSO }} \
   --client-secret {{ ECOMMERCE_OAUTH2_SECRET_SSO }} \
   --scopes user_id \
