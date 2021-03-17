@@ -5,3 +5,4 @@ EDX_API_KEY = "{{ ECOMMERCE_API_KEY }}"
 ECOMMERCE_API_SIGNING_KEY = "{{ JWT_COMMON_SECRET_KEY }}"
 from babel.numbers import get_currency_symbol
 PAID_COURSE_REGISTRATION_CURRENCY = ["{{ ECOMMERCE_CURRENCY }}", get_currency_symbol("{{ ECOMMERCE_CURRENCY }}")]
+COURSE_MODE_DEFAULTS["currency"] = "{{ ECOMMERCE_CURRENCY }}"
