@@ -1,0 +1,2 @@
+ECOMMERCE_BASE_URL='{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ ECOMMERCE_HOST }}'
+ORDER_HISTORY_URL='{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ MFE_HOST }}/{{ ECOMMERCE_PAYMENT_MFE_APP['name'] }}/orders'

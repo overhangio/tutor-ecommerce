@@ -47,19 +47,38 @@ config = {
     },
     "defaults": {
         "VERSION": __version__,
+        "API_TIMEOUT": 5,
+        "CURRENCY": "USD",
         "DOCKER_IMAGE": "{{ DOCKER_REGISTRY }}overhangio/openedx-ecommerce:{{ ECOMMERCE_VERSION }}",
         "WORKER_DOCKER_IMAGE": "{{ DOCKER_REGISTRY }}overhangio/openedx-ecommerce-worker:{{ ECOMMERCE_VERSION }}",
+        "EXTRA_PIP_REQUIREMENTS": [],
         "HOST": "ecommerce.{{ LMS_HOST }}",
         "MYSQL_DATABASE": "ecommerce",
         "MYSQL_USERNAME": "ecommerce",
-        "CURRENCY": "USD",
         "OAUTH2_KEY": "ecommerce",
         "OAUTH2_KEY_DEV": "ecommerce-dev",
         "OAUTH2_KEY_SSO": "ecommerce-sso",
         "OAUTH2_KEY_SSO_DEV": "ecommerce-sso-dev",
-        "API_TIMEOUT": 5,
         "WORKER_JWT_ISSUER": "ecommerce-worker",  # TODO do we need to keep this?
-        "EXTRA_PIP_REQUIREMENTS": [],
+        # Micro frontend applications
+        "MFE_APP": {
+            "name": "ecommerce",
+            "repository": "https://github.com/edx/frontend-app-ecommerce",
+            "port": 1996,
+        },
+        "PAYMENT_MFE_APP": {
+            "name": "payment",
+            "repository": "https://github.com/edx/frontend-app-payment",
+            "port": 1998,
+            "env": {
+                "production": {
+                    "SUPPORT_URL": "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/contact",
+                },
+                "development": {
+                    "SUPPORT_URL": "http://{{ LMS_HOST }}:8000/contact",
+                }
+            }
+        },
     },
 }
 

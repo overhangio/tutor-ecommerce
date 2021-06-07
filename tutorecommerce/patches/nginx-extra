@@ -1,4 +1,4 @@
-# Ecommerce
+# E-Commerce
 upstream ecommerce-backend {
     server ecommerce:8000 fail_timeout=0;
 }
