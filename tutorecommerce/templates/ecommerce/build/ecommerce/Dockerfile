@@ -20,14 +20,6 @@ RUN mkdir -p /openedx/ecommerce && \
     git clone $ECOMMERCE_REPOSITORY --branch $ECOMMERCE_VERSION --depth 1 /openedx/ecommerce
 WORKDIR /openedx/ecommerce
 
-# Fix a few issues, and improve custom server-side payment processor extensibility
-# https://github.com/edx/ecommerce/pull/3140
-# https://github.com/overhangio/ecommerce/commits/overhangio/improve-extensibility
-RUN curl https://github.com/overhangio/ecommerce/commit/ba8aaf4b77c8351ea16b69f8b077cfeaab824fc3.patch | git apply -
-RUN curl https://github.com/overhangio/ecommerce/commit/e5d5bdc5dc501a85d08d4fd7e534a9b939a16955.patch | git apply -
-RUN curl https://github.com/overhangio/ecommerce/commit/e788b836a899f168eeb28a213bddb9d2ca6a44c8.patch | git apply -
-RUN curl https://github.com/overhangio/ecommerce/commit/e18da93ad338cfd15b8c53f83c0dd2ee6bcec372.patch | git apply -
-
 # nodejs requirements (aka: "make requirements.js")
 ARG NPM_REGISTRY=https://registry.npmjs.org/
 RUN npm install --verbose --registry=$NPM_REGISTRY
