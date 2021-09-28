@@ -62,7 +62,7 @@ config = {
         "WORKER_JWT_ISSUER": "ecommerce-worker",  # TODO do we need to keep this?
         # Micro frontend applications
         "MFE_APP": {
-            "name": "ecommerce",
+            "name": "orders",
             "repository": "https://github.com/edx/frontend-app-ecommerce",
             "port": 1996,
         },
