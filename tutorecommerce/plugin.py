@@ -40,6 +40,7 @@ config = {
                 "error_url": "/checkout/error/",
             },
         },
+        "ENABLE_IDENTITY_VERIFICATION": True,
         "ENABLED_PAYMENT_PROCESSORS": ["cybersource", "paypal"],
         "ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS": ["cybersource"],
         "EXTRA_PAYMENT_PROCESSOR_CLASSES": [],

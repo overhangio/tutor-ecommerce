@@ -52,6 +52,7 @@ Configuration
 
 - ``ECOMMERCE_HOST`` (default: ``"ecommerce.{{ LMS_HOST }}"``)
 - ``ECOMMERCE_PAYMENT_PROCESSORS`` (default: ``{cybersource: {...}, paypal: {...}}`` See below for details.)
+- ``ECOMMERCE_ENABLE_IDENTITY_VERIFICATION``: (default: ``True``)
 - ``ECOMMERCE_ENABLED_PAYMENT_PROCESSORS``: (default: ``["cybersource", "paypal"]``)
 - ``ECOMMERCE_ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS`` (default: ``["cybersource"]``)
 - ``ECOMMERCE_EXTRA_PAYMENT_PROCESSOR_CLASSES`` (default: ``[]``)
