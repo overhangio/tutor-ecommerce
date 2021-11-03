@@ -73,11 +73,12 @@ config = {
             "env": {
                 "production": {
                     "SUPPORT_URL": "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/contact",
+                    "CYBERSOURCE_URL": '{{ ECOMMERCE_PAYMENT_PROCESSORS.get("cybersource", {}).get("payment_page_url", "") }}',
                 },
                 "development": {
                     "SUPPORT_URL": "http://{{ LMS_HOST }}:8000/contact",
-                }
-            }
+                },
+            },
         },
     },
 }
