@@ -72,16 +72,16 @@ EMAIL_USE_TLS = {{SMTP_USE_TLS}}
 ENTERPRISE_SERVICE_URL = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/enterprise/'
 ENTERPRISE_API_URL = urljoin(ENTERPRISE_SERVICE_URL, 'api/v1/')
 
-LOGGING["handlers"]["local"] = {
-    "class": "logging.handlers.WatchedFileHandler",
-    "filename": "/var/log/ecommerce.log",
-    "formatter": "standard",
-}
+# Get rid of local logger
+LOGGING["handlers"].pop("local")
+for logger in LOGGING["loggers"].values():
+    logger["handlers"].remove("local")
 
+common_payment_processor_config = json.loads("""{{ ECOMMERCE_PAYMENT_PROCESSORS|tojson(indent=4) }}""")
 PAYMENT_PROCESSOR_CONFIG = {
-    "openedx": json.loads("""{{ ECOMMERCE_PAYMENT_PROCESSORS|tojson(indent=4) }}"""),
+    "openedx": common_payment_processor_config,
+    "dev": common_payment_processor_config,
 }
-PAYMENT_PROCESSOR_CONFIG["dev"] = PAYMENT_PROCESSOR_CONFIG["openedx"]
 PAYMENT_PROCESSORS = list(PAYMENT_PROCESSORS) + {{ ECOMMERCE_EXTRA_PAYMENT_PROCESSOR_CLASSES }}
 
 {% for payment_processor, urls_module in ECOMMERCE_EXTRA_PAYMENT_PROCESSOR_URLS.items() %}

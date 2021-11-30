@@ -28,27 +28,8 @@ Note that this plugins is compatible with `Kubernetes integration <http://docs.t
 
 For further instructions on how to setup E-Commerce with Open edX, check the `official E-Commerce documentation <https://edx-ecommerce.readthedocs.io/en/latest/>`__.
 
-Operations
-----------
-
-Creating a user
-~~~~~~~~~~~~~~~
-
-The ecommerce user interface will be available at http://ecommerce.local.overhang.io for a local instance, and at ``ECOMMERCE_HOST`` (by  default: ``http(s)://ecommerce.<yours lms host>``) in production. In order to run commands from the UI, a user with admin rights must be created. There are two ways to proceed. To create a brand new user in E-Commerce which will not exist in the LMS, run::
-
-  tutor local run ecommerce ./manage.py createsuperuser
-
-Then login with this new user at: http://ecommerce.local.overhang.io/admin/
-
-To re-use an existing LMS user, first go to http://ecommerce.local.overhang.io/login. You should be redirected to the LMS login page, then to the dashboard. Then this user must be made a staff/superuser in E-Commerce::
-
-    tutor local run ecommerce ./manage.py shell -c "from django.contrib.auth import get_user_model; get_user_model().objects.filter(email='USER@EMAIL.COM').update(is_staff=True, is_superuser=True)"
-
-Make sure to replace ``USER@EMAIL.COM`` by the actual user email address. You should then be able to view the Oscar dashboard at http://ecommerce.local.overhang.io.
-
-
 Configuration
-~~~~~~~~~~~~~
+-------------
 
 - ``ECOMMERCE_HOST`` (default: ``"ecommerce.{{ LMS_HOST }}"``)
 - ``ECOMMERCE_PAYMENT_PROCESSORS`` (default: ``{cybersource: {...}, paypal: {...}}`` See below for details.)
@@ -72,32 +53,52 @@ Configuration
 
 You will need to modify the ``ECOMMERCE_PAYMENT_PROCESSORS`` parameter to configure your payment providers credentials. By default, it is equal to::
 
-  cybersource:
-    access_key: SET-ME-PLEASE
-    cancel_checkout_path: /checkout/cancel-checkout/
-    merchant_id: SET-ME-PLEASE
-    payment_page_url: https://testsecureacceptance.cybersource.com/pay
-    profile_id: SET-ME-PLEASE
-    receipt_page_url: /checkout/receipt/
-    secret_key: SET-ME-PLEASE
-    send_level_2_3_details: true
-    soap_api_url: https://ics2wstest.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.140.wsdl
-    sop_access_key: SET-ME-PLEASE
-    sop_payment_page_url: https://testsecureacceptance.cybersource.com/silent/pay
-    sop_profile_id: SET-ME-PLEASE
-    sop_secret_key: SET-ME-PLEASE
-    transaction_key: SET-ME-PLEASE
-  paypal:
-    cancel_checkout_path: /checkout/cancel-checkout/
-    client_id: SET-ME-PLEASE
-    client_secret: SET-ME-PLEASE
-    error_url: /checkout/error/
-    mode: sandbox
-    receipt_url: /checkout/receipt/
+    cybersource:
+        merchant_id: SET-ME-PLEASE 
+        flex_shared_secret_key_id: SET-ME-PLEASE
+        flex_shared_secret_key: SET-ME-PLEASE
+        soap_api_url: https://ics2wstest.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.140.wsdl
+        transaction_key: SET-ME-PLEASE
+      paypal:
+        cancel_checkout_path: /checkout/cancel-checkout/
+        client_id: SET-ME-PLEASE
+        client_secret: SET-ME-PLEASE
+        error_url: /checkout/error/
+        mode: sandbox
+        receipt_url: /checkout/receipt/
 
 We suggest you modify this configuration, save it to ``ecommerce-config.yml`` and then load it with::
 
   tutor config save --set "ECOMMERCE_PAYMENT_PROCESSORS=$(cat ecommerce-config.yml)"
+
+Cybersource
+~~~~~~~~~~~
+
+To enable the `Cybersource <https://cybersource.com>`__ payment processor, two keys need to be generated. In your Cybersource account, go to "Payment Configuration" 🠆 "Key Management" 🠆 "Generate key". Create the following keys: 
+
+- SOAP API key: use this key to define the ``transaction_key`` setting.
+- REST Shared secret: use the key ID and value to define ``flex_shared_secret_key_id`` and ``flex_shared_secret_key``, respectively.
+
+The ``merchant_id`` setting corresponds to your Merchant ID.
+
+Operations
+----------
+
+Creating a user
+~~~~~~~~~~~~~~~
+
+The ecommerce user interface will be available at http://ecommerce.local.overhang.io for a local instance, and at ``ECOMMERCE_HOST`` (by  default: ``http(s)://ecommerce.<yours lms host>``) in production. In order to run commands from the UI, a user with admin rights must be created. There are two ways to proceed. To create a brand new user in E-Commerce which will not exist in the LMS, run::
+
+  tutor local run ecommerce ./manage.py createsuperuser
+
+Then login with this new user at: http://ecommerce.local.overhang.io/admin/
+
+To re-use an existing LMS user, first go to http://ecommerce.local.overhang.io/login. You should be redirected to the LMS login page, then to the dashboard. Then this user must be made a staff/superuser in E-Commerce::
+
+    tutor local run ecommerce ./manage.py shell -c "from django.contrib.auth import get_user_model; get_user_model().objects.filter(email='USER@EMAIL.COM').update(is_staff=True, is_superuser=True)"
+
+Make sure to replace ``USER@EMAIL.COM`` by the actual user email address. You should then be able to view the Oscar dashboard at http://ecommerce.local.overhang.io.
+
 
 Custom payment processors
 ~~~~~~~~~~~~~~~~~~~~~~~~~

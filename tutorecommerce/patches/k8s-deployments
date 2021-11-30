@@ -14,6 +14,9 @@ spec:
       labels:
         app.kubernetes.io/name: ecommerce
     spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
       containers:
         - name: ecommerce
           image: {{ ECOMMERCE_DOCKER_IMAGE }}
@@ -26,6 +29,8 @@ spec:
             - mountPath: /openedx/ecommerce/ecommerce/settings/tutor/production.py
               name: settings
               subPath: production.py
+          securityContext:
+            allowPrivilegeEscalation: false
       volumes:
         - name: settings
           configMap:
@@ -46,6 +51,9 @@ spec:
       labels:
         app.kubernetes.io/name: ecommerce-worker
     spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
       containers:
         - name: ecommerce-worker
           image: {{ ECOMMERCE_WORKER_DOCKER_IMAGE }}
@@ -60,6 +68,8 @@ spec:
             - mountPath: /openedx/ecommerce_worker/ecommerce_worker/configuration/tutor/production.py
               name: settings
               subPath: production.py
+          securityContext:
+            allowPrivilegeEscalation: false
       volumes:
         - name: settings
           configMap:
