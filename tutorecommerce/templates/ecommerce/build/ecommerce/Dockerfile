@@ -3,10 +3,14 @@ FROM docker.io/ubuntu:20.04
 RUN apt update && \
   apt install -y curl git-core language-pack-en libmysqlclient-dev libssl-dev python3 python3-pip python3-venv
 
+ARG APP_USER_ID=1000
+RUN useradd --home-dir /openedx --create-home --shell /bin/bash --uid ${APP_USER_ID} app
+USER ${APP_USER_ID}
+
 # Create python venv
-RUN mkdir /openedx/ && python3 -m venv /openedx/venv/
+RUN python3 -m venv /openedx/venv/
 ENV PATH "/openedx/venv/bin:$PATH"
-RUN pip install setuptools==44.1.0 pip==20.0.2 wheel==0.34.2
+RUN pip install setuptools==44.1.0 pip==20.3.4 wheel==0.37.0
 
 # Install a recent version of nodejs
 RUN pip install nodeenv
@@ -30,7 +34,7 @@ RUN pip install -r requirements.txt
 RUN pip install uwsgi==2.0.19.1
 
 # Install private requirements: this is useful for installing custom payment processors.
-COPY ./requirements/ /openedx/requirements
+COPY --chown=app:app ./requirements/ /openedx/requirements
 RUN cd /openedx/requirements/ \
   && touch ./private.txt \
   && pip install -r ./private.txt
@@ -39,7 +43,7 @@ RUN cd /openedx/requirements/ \
 {% endfor %}
 
 # Collect static assets (aka: "make static")
-COPY assets.py ./ecommerce/settings/assets.py
+COPY --chown=app:app assets.py ./ecommerce/settings/assets.py
 ENV DJANGO_SETTINGS_MODULE ecommerce.settings.assets
 RUN python3 manage.py update_assets --skip-collect
 RUN ./node_modules/.bin/r.js -o build.js

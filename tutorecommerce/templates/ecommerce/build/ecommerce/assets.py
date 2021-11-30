@@ -1,10 +1,9 @@
 from .base import *
 
-LOGGING["handlers"]["local"] = {
-    "class": "logging.handlers.WatchedFileHandler",
-    "filename": "/var/log/ecommerce.log",
-    "formatter": "standard",
-}
+# Get rid of local logger
+LOGGING["handlers"].pop("local")
+for logger in LOGGING["loggers"].values():
+    logger["handlers"].remove("local")
 
 COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = True
