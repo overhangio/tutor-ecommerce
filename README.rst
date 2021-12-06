@@ -74,7 +74,6 @@ You will need to modify the ``ECOMMERCE_PAYMENT_PROCESSORS`` parameter to config
 
 cybersource:
     merchant_id: SET-ME-PLEASE 
-    payment_mfe_host: MFE-HOST # Example: https://apps.tutor.edu
     flex_shared_secret_key_id: SET-ME-PLEASE
     flex_shared_secret_key: SET-ME-PLEASE
     secret_key: SET-ME-PLEASE 
