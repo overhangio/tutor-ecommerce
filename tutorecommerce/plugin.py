@@ -16,20 +16,13 @@ config = {
         "API_KEY": "{{ 20|random_string }}",
         "PAYMENT_PROCESSORS": {
             "cybersource": {
-                "merchant_id": "SET-ME-PLEASE",
-                "profile_id": "SET-ME-PLEASE",
-                "access_key": "SET-ME-PLEASE",
-                "secret_key": "SET-ME-PLEASE",
-                "transaction_key": "SET-ME-PLEASE",
-                "payment_page_url": "https://testsecureacceptance.cybersource.com/pay",
-                "receipt_page_url": "/checkout/receipt/",
-                "cancel_checkout_path": "/checkout/cancel-checkout/",
-                "soap_api_url": "https://ics2wstest.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.140.wsdl",
-                "send_level_2_3_details": True,
-                "sop_profile_id": "SET-ME-PLEASE",
-                "sop_access_key": "SET-ME-PLEASE",
-                "sop_secret_key": "SET-ME-PLEASE",
-                "sop_payment_page_url": "https://testsecureacceptance.cybersource.com/silent/pay",
+                "merchant_id": "SET-ME-PLEASE"
+                "payment_mfe_host": "MFE-HOST # Example: https://apps.tutor.edu"
+                "flex_shared_secret_key_id": "SET-ME-PLEASE"
+                "flex_shared_secret_key": "SET-ME-PLEASE"
+                "secret_key": "SET-ME-PLEASE"
+                "soap_api_url": "https://ics2wstest.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.140.wsdl"
+                "transaction_key": "SET-ME-PLEASE"
             },
             "paypal": {
                 "mode": "sandbox",
