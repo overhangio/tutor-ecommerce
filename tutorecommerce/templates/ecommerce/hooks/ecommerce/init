@@ -14,7 +14,9 @@
   --sso-client-secret="{{ ECOMMERCE_OAUTH2_SECRET_SSO }}" \
   --backend-service-client-id="{{ ECOMMERCE_OAUTH2_KEY_DEV }}" \
   --backend-service-client-secret="{{ ECOMMERCE_OAUTH2_SECRET }}" \
-  --from-email {{ CONTACT_EMAIL }} \
+  --from-email={{ CONTACT_EMAIL }} \
+  --payment-support-email={{ CONTACT_EMAIL }} \
+  --payment-support-url="http://{{ LMS_HOST }}:8000/support" \
   --discovery_api_url=http://{{ DISCOVERY_HOST }}:8381/api/v1/ \
   --enable-microfrontend-for-basket-page=true \
   --payment-microfrontend-url="http://{{ MFE_HOST }}:{{ ECOMMERCE_PAYMENT_MFE_APP['port'] }}/{{ ECOMMERCE_PAYMENT_MFE_APP['name'] }}"
@@ -34,7 +36,9 @@
   --sso-client-secret="{{ ECOMMERCE_OAUTH2_SECRET_SSO }}" \
   --backend-service-client-id="{{ ECOMMERCE_OAUTH2_KEY }}" \
   --backend-service-client-secret="{{ ECOMMERCE_OAUTH2_SECRET }}" \
-  --from-email {{ CONTACT_EMAIL }} \
+  --from-email={{ CONTACT_EMAIL }} \
+  --payment-support-email={{ CONTACT_EMAIL }} \
+  --payment-support-url="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/support" \
   --discovery_api_url={% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ DISCOVERY_HOST }}/api/v1/ \
   --enable-microfrontend-for-basket-page=true \
   --payment-microfrontend-url="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ MFE_HOST }}/{{ ECOMMERCE_PAYMENT_MFE_APP['name'] }}"

@@ -24,6 +24,13 @@ RUN mkdir -p /openedx/ecommerce && \
     git clone $ECOMMERCE_REPOSITORY --branch $ECOMMERCE_VERSION --depth 1 /openedx/ecommerce
 WORKDIR /openedx/ecommerce
 
+# Identify tutor user to cherry-pick commits
+RUN git config --global user.email "tutor@overhang.io" \
+  && git config --global user.name "Tutor"
+
+# Fix payment MFE connection
+RUN git fetch https://github.com/bloomedn/ecommerce 3f9af6ac48b26b579419fcdec2efb06aecc961eb && git cherry-pick 3f9af6ac48b26b579419fcdec2efb06aecc961eb
+
 # nodejs requirements (aka: "make requirements.js")
 ARG NPM_REGISTRY=https://registry.npmjs.org/
 RUN npm install --verbose --registry=$NPM_REGISTRY

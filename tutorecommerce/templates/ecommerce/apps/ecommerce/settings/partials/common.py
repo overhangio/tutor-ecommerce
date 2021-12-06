@@ -80,7 +80,12 @@ for logger in LOGGING["loggers"].values():
 PAYMENT_PROCESSOR_CONFIG = {
     "openedx": json.loads("""{{ ECOMMERCE_PAYMENT_PROCESSORS|tojson(indent=4) }}"""),
 }
-PAYMENT_PROCESSOR_CONFIG["dev"] = PAYMENT_PROCESSOR_CONFIG["openedx"]
+from copy import deepcopy
+PAYMENT_PROCESSOR_CONFIG["dev"] = deepcopy(PAYMENT_PROCESSOR_CONFIG["openedx"])
+{%- if "cybersource" in ECOMMERCE_PAYMENT_PROCESSORS %}
+PAYMENT_PROCESSOR_CONFIG["openedx"]["cybersource"]["payment_mfe_host"] = "{% if ENABLE_HTTPS %}https://{% else %}http://{% endif %}{{ MFE_HOST }}"
+PAYMENT_PROCESSOR_CONFIG["dev"]["cybersource"]["payment_mfe_host"] = "http://{{ MFE_HOST }}:{{ ECOMMERCE_PAYMENT_MFE_APP['port'] }}"
+{%- endif %}
 PAYMENT_PROCESSORS = list(PAYMENT_PROCESSORS) + {{ ECOMMERCE_EXTRA_PAYMENT_PROCESSOR_CLASSES }}
 
 {% for payment_processor, urls_module in ECOMMERCE_EXTRA_PAYMENT_PROCESSOR_URLS.items() %}

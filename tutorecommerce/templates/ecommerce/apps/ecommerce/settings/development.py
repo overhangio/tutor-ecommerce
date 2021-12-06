@@ -5,9 +5,7 @@ from ..devstack import *
 CORS_ORIGIN_WHITELIST = list(CORS_ORIGIN_WHITELIST) + [
     "http://{{ MFE_HOST }}:{{ ECOMMERCE_MFE_APP['port'] }}",
 ]
-CSRF_TRUSTED_ORIGINS = [
-    "http://{{ MFE_HOST }}:{{ ECOMMERCE_MFE_APP['port'] }}",
-]
+CSRF_TRUSTED_ORIGINS = ["{{ MFE_HOST }}:{{ ECOMMERCE_MFE_APP['port'] }}"]
 
 SOCIAL_AUTH_EDX_OAUTH2_PUBLIC_URL_ROOT = "http://{{ LMS_HOST }}:8000"
 
