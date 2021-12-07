@@ -19,7 +19,6 @@ config = {
                 "merchant_id": "SET-ME-PLEASE"
                 "flex_shared_secret_key_id": "SET-ME-PLEASE"
                 "flex_shared_secret_key": "SET-ME-PLEASE"
-                "secret_key": "SET-ME-PLEASE"
                 "soap_api_url": "https://ics2wstest.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.140.wsdl"
                 "transaction_key": "SET-ME-PLEASE"
             },
