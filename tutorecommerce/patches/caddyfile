@@ -3,5 +3,5 @@
     request_body {
         max_size 10MB
     }
-    reverse_proxy ecommerce:8000
+    import proxy "ecommerce:8000"
 }
