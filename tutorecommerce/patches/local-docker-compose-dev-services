@@ -4,6 +4,8 @@ ecommerce:
   command: ./manage.py runserver 0.0.0.0:8130
   ports:
     - "127.0.0.1:8130:8130"
+  stdin_open: true
+  tty: true
   volumes:
     # editable requirements
     - ../plugins/ecommerce/build/ecommerce/requirements:/openedx/requirements
