@@ -11,3 +11,5 @@ CSRF_TRUSTED_ORIGINS = ["{{ MFE_HOST }}:{{ ECOMMERCE_MFE_APP['port'] }}"]
 SOCIAL_AUTH_EDX_OAUTH2_PUBLIC_URL_ROOT = "http://{{ LMS_HOST }}:8000"
 
 BACKEND_SERVICE_EDX_OAUTH2_KEY = "{{ ECOMMERCE_OAUTH2_KEY_DEV }}"
+
+{{ patch("ecommerce-settings-development") }}
