@@ -32,6 +32,7 @@ Configuration
 -------------
 
 - ``ECOMMERCE_HOST`` (default: ``"ecommerce.{{ LMS_HOST }}"``)
+- ``ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL`` (default: ``""``)
 - ``ECOMMERCE_PAYMENT_PROCESSORS`` (default: ``{cybersource: {...}, paypal: {...}}`` See below for details.)
 - ``ECOMMERCE_ENABLE_IDENTITY_VERIFICATION``: (default: ``True``)
 - ``ECOMMERCE_ENABLED_PAYMENT_PROCESSORS``: (default: ``["cybersource", "paypal"]``)
