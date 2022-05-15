@@ -55,8 +55,8 @@ RUN cd /openedx/requirements/ \
 {% if ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL %}
 RUN git clone {{ ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL }}
 ENV REPO {{ ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL }}
-RUN /bin/bash REPO=$(basename $REPO)
-RUN /bin/bash REPO=${REPO%.*}
+RUN /bin/bash $(REPO=$(basename $REPO))
+RUN /bin/bash $(REPO=${REPO%.*})
 ADD --chown=app:app $REPO /openedx/ecommerce/ecommerce/themes/
 {% endif %}
 
