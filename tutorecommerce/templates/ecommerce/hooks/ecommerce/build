@@ -1,0 +1,11 @@
+# hook to add git clone of repo.
+if [ -z "$CUSTOM_THEME_REPOSITORY_URL" ]
+then
+      echo "cloning custom theme"
+      if [ -z "$CUSTOM_THEME_NAME" ]
+      then
+        git clone {{ THEME_REPOSITORY_URL }} ./ecommerce/themes/{{ CUSTOM_THEME_NAME }}
+      else 
+        git clone {{ THEME_REPOSITORY_URL }} ./ecommerce/themes/
+      fi
+fi
