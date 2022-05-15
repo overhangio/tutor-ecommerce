@@ -82,6 +82,9 @@ config = {
 }
 
 ################# Initialization tasks
+
+# deployment hooks
+# -----------------------------------------------------------------------------
 tutor_hooks.Filters.COMMANDS_INIT.add_item(
     (
         "lms",
@@ -100,10 +103,18 @@ tutor_hooks.Filters.COMMANDS_INIT.add_item(
         ("ecommerce", "hooks", "mysql", "init"),
     )
 )
+
+# build hooks
+# -----------------------------------------------------------------------------
 tutor_hooks.Filters.IMAGES_BUILD.add_item(
     (
         "ecommerce",
-        #("ecommerce", "hooks", "ecommerce", "build"),
+        ("ecommerce", "hooks", "ecommerce", "build"),
+    )
+)
+tutor_hooks.Filters.IMAGES_BUILD.add_item(
+    (
+        "ecommerce",
         ("plugins", "ecommerce", "build", "ecommerce"),
         "{{ ECOMMERCE_DOCKER_IMAGE }}",
         (),
