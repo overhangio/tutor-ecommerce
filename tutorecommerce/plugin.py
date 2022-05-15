@@ -22,7 +22,6 @@ config = {
         "OAUTH2_KEY_SSO": "ecommerce-sso",
         "OAUTH2_KEY_SSO_DEV": "ecommerce-sso-dev",
         "CUSTOM_THEME_REPOSITORY_URL": "",
-        "CUSTOM_THEME_NAME": "edx-theme",
         "WORKER_JWT_ISSUER": "ecommerce-worker",  # TODO do we need to keep this?
         # Micro frontend applications
         "MFE_APP": {
