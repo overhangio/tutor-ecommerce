@@ -103,7 +103,7 @@ tutor_hooks.Filters.COMMANDS_INIT.add_item(
 tutor_hooks.Filters.IMAGES_BUILD.add_item(
     (
         "ecommerce",
-        ("ecommerce", "hooks", "ecommerce", "build"),
+        #("ecommerce", "hooks", "ecommerce", "build"),
         ("plugins", "ecommerce", "build", "ecommerce"),
         "{{ ECOMMERCE_DOCKER_IMAGE }}",
         (),
