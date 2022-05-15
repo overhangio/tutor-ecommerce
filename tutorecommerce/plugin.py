@@ -108,16 +108,10 @@ tutor_hooks.Filters.COMMANDS_INIT.add_item(
 # -----------------------------------------------------------------------------
 tutor_hooks.Filters.IMAGES_BUILD.add_item(
     (
-        "ecommerce",
-        ("ecommerce", "hooks", "ecommerce", "build"),
-    )
-)
-tutor_hooks.Filters.IMAGES_BUILD.add_item(
-    (
-        "ecommerce",
-        ("plugins", "ecommerce", "build", "ecommerce"),
-        "{{ ECOMMERCE_DOCKER_IMAGE }}",
-        (),
+        "ecommerce",                                    # same name that will be passed to the `build` command
+        ("plugins", "ecommerce", "build", "ecommerce"), # path to the Dockerfile folder
+        "{{ ECOMMERCE_DOCKER_IMAGE }}",                 # Docker image tag
+        (),                                             # custom build arguments that will be passed to the `docker build` command
     )
 )
 tutor_hooks.Filters.IMAGES_BUILD.add_item(

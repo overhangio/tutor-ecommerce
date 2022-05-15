@@ -52,7 +52,10 @@ RUN cd /openedx/requirements/ \
 {% endfor %}
 
 # Install custom theme folders.
-COPY --chown=app:app ./themes/ /openedx/ecommerce/ecommerce/themes
+{% if ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL and ECOMMERCE_CUSTOM_THEME_NAME %}
+RUN git clone {{ ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL }}
+ADD --chown=app:app {{ ECOMMERCE_CUSTOM_THEME_NAME }} /openedx/ecommerce/ecommerce/themes/
+{% endif %}
 
 # Collect static assets (aka: "make static")
 COPY --chown=app:app assets.py ./ecommerce/settings/assets.py
