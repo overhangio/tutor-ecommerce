@@ -22,15 +22,15 @@ ARG ECOMMERCE_REPOSITORY=https://github.com/edx/ecommerce.git
 ARG ECOMMERCE_VERSION={{ OPENEDX_COMMON_VERSION }}
 RUN mkdir -p /openedx/ecommerce && \
     git clone $ECOMMERCE_REPOSITORY --branch $ECOMMERCE_VERSION --depth 1 /openedx/ecommerce
-WORKDIR /openedx/ecommerce
 
 # Install custom theme
 {% if ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL %}
-RUN git clone {{ ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL }}
-ENV REPO ${$(basename {{ ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL }})%.*}
-RUN echo $REPO
-ADD --chown=app:app $REPO /openedx/ecommerce/ecommerce/themes/
+RUN cd /openedx/ecommerce/ecommerce/themes/ && \
+    git clone {{ ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL }} && \
+    cd /
 {% endif %}
+
+WORKDIR /openedx/ecommerce
 
 
 # Identify tutor user to cherry-pick commits
