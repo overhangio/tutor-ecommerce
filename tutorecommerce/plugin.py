@@ -176,10 +176,10 @@ def _add_remote_ecommerce_image_iff_customized(images, user_config):
 ################# except maybe for educational purposes :)
 
 # Plugin templates
-hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(
+tutor_hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(
     pkg_resources.resource_filename("tutorecommerce", "templates")
 )
-hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
+tutor_hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
     [
         ("ecommerce/build", "plugins"),
         ("ecommerce/apps", "plugins"),
@@ -196,16 +196,16 @@ for path in glob(
         hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
 
 # Load all configuration entries
-hooks.Filters.CONFIG_DEFAULTS.add_items(
+tutor_hooks.Filters.CONFIG_DEFAULTS.add_items(
     [
         (f"ECOMMERCE_{key}", value)
         for key, value in config["defaults"].items()
     ]
 )
-hooks.Filters.CONFIG_UNIQUE.add_items(
+tutor_hooks.Filters.CONFIG_UNIQUE.add_items(
     [
         (f"ECOMMERCE_{key}", value)
         for key, value in config["unique"].items()
     ]
 )
-hooks.Filters.CONFIG_OVERRIDES.add_items(list(config["overrides"].items()))
+tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(list(config["overrides"].items()))
