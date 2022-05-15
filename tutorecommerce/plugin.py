@@ -109,14 +109,14 @@ tutor_hooks.Filters.IMAGES_BUILD.add_item(
         (),
     )
 )
-#tutor_hooks.Filters.IMAGES_BUILD.add_item(
-#    (
-#        "ecommerce-worker",
-#        ("plugins", "ecommerce", "build", "ecommerce-worker"),
-#        "{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
-#        (),
-#    )
-#)
+tutor_hooks.Filters.IMAGES_BUILD.add_item(
+    (
+        "ecommerce-worker",
+        ("plugins", "ecommerce", "build", "ecommerce-worker"),
+        "{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
+        (),
+    )
+)
 
 @tutor_hooks.Filters.IMAGES_PULL.add()
 @tutor_hooks.Filters.IMAGES_PUSH.add()
@@ -137,9 +137,9 @@ def _add_remote_ecommerce_image_iff_customized(images, user_config):
         # Image has been customized. Add to list for pulling/pushing.
         images.append(("ecommerce", image_tag))
 
-    #image_tag = user_config["ECOMMERCE_WORKER_DOCKER_IMAGE"]
-    #if not image_tag.startswith("docker.io/overhangio/openedx-ecommerce-worker:"):
-    #    images.append(("ecommerce-worker", image_tag))
+    image_tag = user_config["ECOMMERCE_WORKER_DOCKER_IMAGE"]
+    if not image_tag.startswith("docker.io/overhangio/openedx-ecommerce-worker:"):
+        images.append(("ecommerce-worker", image_tag))
 
     return images
 
