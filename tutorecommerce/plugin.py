@@ -109,14 +109,14 @@ tutor_hooks.Filters.IMAGES_BUILD.add_item(
         (),
     )
 )
-tutor_hooks.Filters.IMAGES_BUILD.add_item(
-    (
-        "ecommerce-worker",
-        ("plugins", "ecommerce", "build", "ecommerce-worker"),
-        "{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
-        (),
-    )
-)
+#tutor_hooks.Filters.IMAGES_BUILD.add_item(
+#    (
+#        "ecommerce-worker",
+#        ("plugins", "ecommerce", "build", "ecommerce-worker"),
+#        "{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
+#        (),
+#    )
+#)
 
 @tutor_hooks.Filters.IMAGES_PULL.add()
 @tutor_hooks.Filters.IMAGES_PUSH.add()
