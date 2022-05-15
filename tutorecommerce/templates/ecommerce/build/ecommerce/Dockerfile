@@ -24,6 +24,12 @@ RUN mkdir -p /openedx/ecommerce && \
     git clone $ECOMMERCE_REPOSITORY --branch $ECOMMERCE_VERSION --depth 1 /openedx/ecommerce
 WORKDIR /openedx/ecommerce
 
+# Install custom theme
+{% if ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL %}
+RUN git clone {{ ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL }}  /openedx/ecommerce/ecommerce/themes/
+{% endif %}
+
+
 # Identify tutor user to cherry-pick commits
 RUN git config --global user.email "tutor@overhang.io" \
   && git config --global user.name "Tutor"
@@ -50,15 +56,6 @@ RUN cd /openedx/requirements/ \
 
 {% for extra_requirement in ECOMMERCE_EXTRA_PIP_REQUIREMENTS %}RUN pip install {{ extra_requirement }}
 {% endfor %}
-
-# Install custom theme folders.
-{% if ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL %}
-RUN git clone {{ ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL }}
-ENV REPO {{ ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL }}
-RUN /bin/bash $(REPO=$(basename $REPO))
-RUN /bin/bash $(REPO=${REPO%.*})
-ADD --chown=app:app $REPO /openedx/ecommerce/ecommerce/themes/
-{% endif %}
 
 # Collect static assets (aka: "make static")
 COPY --chown=app:app assets.py ./ecommerce/settings/assets.py
