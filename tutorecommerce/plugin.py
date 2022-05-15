@@ -2,10 +2,12 @@ from glob import glob
 import os
 import pkg_resources
 
-from tutor import hooks as tutor_hooks
+from tutor import hooks
 
 from .__about__ import __version__
 
+
+################# Configuration
 config = {
     "defaults": {
         "VERSION": __version__,
@@ -81,25 +83,48 @@ config = {
 }
 
 ################# Initialization tasks
+# To run the script from templates/ecommerce/tasks/myservice/init, add:
+# hooks.Filters.COMMANDS_INIT.add_item((
+#     "myservice",
+#     ("ecommerce", "tasks", "myservice", "init"),
+# ))
+
+################# Docker image management
+# To build an image with `tutor images build myimage`, add a Dockerfile to templates/ecommerce/build/myimage and write:
+# hooks.Filters.IMAGES_BUILD.add_item((
+#     "myimage",
+#     ("plugins", "ecommerce", "build", "myimage"),
+#     "docker.io/myimage:\{\{ ECOMMERCE_VERSION \}\}",
+#     (),
+# )
+# To pull/push an image with `tutor images pull myimage` and `tutor images push myimage`, write:
+# hooks.Filters.IMAGES_PULL.add_item((
+#     "myimage",
+#     "docker.io/myimage:\{\{ ECOMMERCE_VERSION \}\}",
+# )
+# hooks.Filters.IMAGES_PUSH.add_item((
+#     "myimage",
+#     "docker.io/myimage:\{\{ ECOMMERCE_VERSION \}\}",
+# )
 
 # deployment hooks
 # -----------------------------------------------------------------------------
 tutor_hooks.Filters.COMMANDS_INIT.add_item(
     (
         "lms",
-        ("ecommerce", "hooks", "lms", "init"),
+        ("ecommerce", "tasks", "lms", "init"),
     )
 )
 tutor_hooks.Filters.COMMANDS_INIT.add_item(
     (
         "ecommerce",
-        ("ecommerce", "hooks", "ecommerce", "init"),
+        ("ecommerce", "tasks", "ecommerce", "init"),
     )
 )
 tutor_hooks.Filters.COMMANDS_INIT.add_item(
     (
         "mysql",
-        ("ecommerce", "hooks", "mysql", "init"),
+        ("ecommerce", "tasks", "mysql", "init"),
     )
 )
 
@@ -147,15 +172,14 @@ def _add_remote_ecommerce_image_iff_customized(images, user_config):
 
     return images
 
-
 ################# You don't really have to bother about what's below this line,
 ################# except maybe for educational purposes :)
 
 # Plugin templates
-tutor_hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(
+hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(
     pkg_resources.resource_filename("tutorecommerce", "templates")
 )
-tutor_hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
+hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
     [
         ("ecommerce/build", "plugins"),
         ("ecommerce/apps", "plugins"),
@@ -169,19 +193,19 @@ for path in glob(
     )
 ):
     with open(path, encoding="utf-8") as patch_file:
-        tutor_hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
+        hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
 
 # Load all configuration entries
-tutor_hooks.Filters.CONFIG_DEFAULTS.add_items(
+hooks.Filters.CONFIG_DEFAULTS.add_items(
     [
         (f"ECOMMERCE_{key}", value)
         for key, value in config["defaults"].items()
     ]
 )
-tutor_hooks.Filters.CONFIG_UNIQUE.add_items(
+hooks.Filters.CONFIG_UNIQUE.add_items(
     [
         (f"ECOMMERCE_{key}", value)
         for key, value in config["unique"].items()
     ]
 )
-tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(list(config["overrides"].items()))
+hooks.Filters.CONFIG_OVERRIDES.add_items(list(config["overrides"].items()))
