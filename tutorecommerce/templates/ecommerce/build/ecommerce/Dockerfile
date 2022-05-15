@@ -26,7 +26,10 @@ WORKDIR /openedx/ecommerce
 
 # Install custom theme
 {% if ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL %}
-RUN git clone {{ ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL }}  /openedx/ecommerce/ecommerce/themes/
+ENV THEME_NAME {{ ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL }}
+RUN /bin/bash $(THEME_NAME=$(basename $THEME_NAME))
+RUN /bin/bash $(THEME_NAME=${REPO%.*})
+RUN git clone {{ ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL }}  /openedx/ecommerce/ecommerce/themes/$THEME_NAME
 {% endif %}
 
 
