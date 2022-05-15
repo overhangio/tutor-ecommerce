@@ -137,10 +137,9 @@ def _add_remote_ecommerce_image_iff_customized(images, user_config):
         # Image has been customized. Add to list for pulling/pushing.
         images.append(("ecommerce", image_tag))
 
-    image_tag = user_config["ECOMMERCE_WORKER_DOCKER_IMAGE"]
-    if not image_tag.startswith("docker.io/overhangio/openedx-ecommerce-worker:"):
-        # Image has been customized. Add to list for pulling/pushing.
-        images.append(("ecommerce-worker", image_tag))
+    #image_tag = user_config["ECOMMERCE_WORKER_DOCKER_IMAGE"]
+    #if not image_tag.startswith("docker.io/overhangio/openedx-ecommerce-worker:"):
+    #    images.append(("ecommerce-worker", image_tag))
 
     return images
 
