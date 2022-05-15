@@ -2,7 +2,7 @@ from glob import glob
 import os
 import pkg_resources
 
-from tutor import hooks
+from tutor import hooks as tutor_hooks
 
 from .__about__ import __version__
 
