@@ -54,9 +54,9 @@ RUN cd /openedx/requirements/ \
 # Install custom theme folders.
 {% if ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL %}
 RUN git clone {{ ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL }}
-RUN REPO=$(basename $ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL) \
-  && REPO=${REPO%.*}
-ADD --chown=app:app {{ REPO }} /openedx/ecommerce/ecommerce/themes/
+ARG REPO=$(basename {{ ECOMMERCE_CUSTOM_THEME_REPOSITORY_URL }})
+ARG REPO=${REPO%.*}
+ADD --chown=app:app $REPO /openedx/ecommerce/ecommerce/themes/
 {% endif %}
 
 # Collect static assets (aka: "make static")
