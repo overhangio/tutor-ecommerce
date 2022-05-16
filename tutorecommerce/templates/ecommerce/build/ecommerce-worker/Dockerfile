@@ -14,7 +14,7 @@ WORKDIR /openedx/ecommerce_worker
 # Install python venv
 RUN python3 -m venv ../venv/
 ENV PATH "/openedx/venv/bin:$PATH"
-RUN pip install setuptools==44.1.0 pip==20.3.4 wheel==0.37.0
+RUN pip install setuptools==62.1.0 pip==22.0.4 wheel==0.37.1
 RUN pip install -r requirements/production.txt
 
 ENV WORKER_CONFIGURATION_MODULE ecommerce_worker.settings.production

@@ -3,7 +3,7 @@ variables:
     TUTOR_IMAGES: ecommerce ecommerce-worker
     TUTOR_PYPI_PACKAGE: tutor-ecommerce
     TUTOR_EXTRA_ENABLED_PLUGINS: discovery mfe
-    OPENEDX_RELEASE: maple
+    OPENEDX_RELEASE: nutmeg
     GITHUB_REPO: overhangio/tutor-ecommerce
 
 include:
