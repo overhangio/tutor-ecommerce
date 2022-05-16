@@ -78,6 +78,9 @@ for logger in LOGGING["loggers"].values():
     logger["handlers"].remove("local")
 
 common_payment_processor_config = json.loads("""{{ ECOMMERCE_PAYMENT_PROCESSORS|tojson(indent=4) }}""")
+# Fix cybersource-rest configuration
+if "cybersource" in common_payment_processor_config and "cybersource-rest" not in common_payment_processor_config:
+    common_payment_processor_config["cybersource-rest"] = common_payment_processor_config["cybersource"]
 PAYMENT_PROCESSOR_CONFIG = {
     "openedx": common_payment_processor_config,
     "dev": common_payment_processor_config,
