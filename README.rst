@@ -140,7 +140,7 @@ You will have to generate static assets in your local repository::
 
 To attach a debugger to the ecommerce service, run::
 
-    tutor dev runserver ecommerce
+    tutor dev start ecommerce
 
 Funding
 -------
