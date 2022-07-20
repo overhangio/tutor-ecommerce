@@ -77,7 +77,7 @@ LOGGING["handlers"].pop("local")
 for logger in LOGGING["loggers"].values():
     logger["handlers"].remove("local")
 
-common_payment_processor_config = json.loads("""{{ ECOMMERCE_PAYMENT_PROCESSORS|tojson(indent=4) }}""")
+common_payment_processor_config = json.loads("""{{ ECOMMERCE_PAYMENT_PROCESSORS|tojson(indent=4) }}""", strict=False)
 # Fix cybersource-rest configuration
 if "cybersource" in common_payment_processor_config and "cybersource-rest" not in common_payment_processor_config:
     common_payment_processor_config["cybersource-rest"] = common_payment_processor_config["cybersource"]
