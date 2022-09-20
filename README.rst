@@ -18,13 +18,13 @@ Then, in any case you need to enable the plugins::
 
     tutor plugins enable discovery ecommerce mfe
 
-Services will have to be re-configured and restarted, so you are probably better off just running quickstart again::
+Services will have to be re-configured and restarted, so you are probably better off just running launch again::
 
-    tutor local quickstart
+    tutor local launch 
 
 Note that this plugins is compatible with `Kubernetes integration <http://docs.tutor.overhang.io/k8s.html>`__. When deploying to a Kubernetes cluster, run instead::
 
-    tutor k8s quickstart
+    tutor k8s launch
 
 For further instructions on how to setup E-Commerce with Open edX, check the `official E-Commerce documentation <https://edx-ecommerce.readthedocs.io/en/latest/>`__.
 
