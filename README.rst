@@ -54,7 +54,7 @@ Configuration
 You will need to modify the ``ECOMMERCE_PAYMENT_PROCESSORS`` parameter to configure your payment providers credentials. By default, it is equal to::
 
     cybersource:
-        merchant_id: SET-ME-PLEASE 
+        merchant_id: SET-ME-PLEASE
         flex_shared_secret_key_id: SET-ME-PLEASE
         flex_shared_secret_key: SET-ME-PLEASE
         soap_api_url: https://ics2wstest.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.140.wsdl
@@ -74,7 +74,7 @@ We suggest you modify this configuration, save it to ``ecommerce-config.yml`` an
 Cybersource
 ~~~~~~~~~~~
 
-To enable the `Cybersource <https://cybersource.com>`__ payment processor, two keys need to be generated. In your Cybersource account, go to "Payment Configuration" 🠆 "Key Management" 🠆 "Generate key". Create the following keys: 
+To enable the `Cybersource <https://cybersource.com>`__ payment processor, two keys need to be generated. In your Cybersource account, go to "Payment Configuration" 🠆 "Key Management" 🠆 "Generate key". Create the following keys:
 
 - SOAP API key: use this key to define the ``transaction_key`` setting.
 - REST Shared secret: use the key ID and value to define ``flex_shared_secret_key_id`` and ``flex_shared_secret_key``, respectively.
@@ -142,14 +142,10 @@ To attach a debugger to the ecommerce service, run::
 
     tutor dev start ecommerce
 
-Funding
--------
+Troubleshooting
+---------------
 
-.. image:: https://overhang.io/static/marketing/img/clients/e-ducation.jpg
-    :alt: E-ducation
-    :target: https://www.e-ducation.cn/
-
-This plugin was developed and open sourced to the community thanks to the generous support of `E-ducation <https://www.e-ducation.cn/>`_. Thank you!
+This Tutor plugin is maintained by Régis Behmo from `Overhang.IO <https://overhang.io>`__. Community support is available from the official `Open edX forum <https://discuss.openedx.org>`__. Do you need help with this plugin? See the `troubleshooting <https://docs.tutor.overhang.io/troubleshooting.html>`__ section from the Tutor documentation.
 
 License
 -------
