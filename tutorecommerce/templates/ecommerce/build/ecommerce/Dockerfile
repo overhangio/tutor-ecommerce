@@ -10,10 +10,14 @@ USER ${APP_USER_ID}
 # Create python venv
 RUN python3 -m venv /openedx/venv/
 ENV PATH "/openedx/venv/bin:$PATH"
-RUN pip install setuptools==62.1.0 pip==22.0.4 wheel==0.37.1
+# https://pypi.org/project/setuptools/
+# https://pypi.org/project/pip/
+# https://pypi.org/project/wheel/
+RUN pip install setuptools==65.5.1 pip==22.3.1. wheel==0.38.4
 
 # Install a recent version of nodejs
-RUN pip install nodeenv
+# https://pypi.org/project/nodeenv
+RUN pip install nodeenv==1.7.0
 RUN nodeenv /openedx/nodeenv --node=16.14.2 --prebuilt
 ENV PATH /openedx/nodeenv/bin:${PATH}
 
@@ -35,7 +39,8 @@ RUN ./node_modules/.bin/bower install --allow-root
 
 # python requirements
 RUN pip install -r requirements.txt
-RUN pip install uwsgi==2.0.20
+# https://pypi.org/project/uWSGI/
+RUN pip install uwsgi==2.0.21
 
 # Install private requirements: this is useful for installing custom payment processors.
 COPY --chown=app:app ./requirements/ /openedx/requirements
