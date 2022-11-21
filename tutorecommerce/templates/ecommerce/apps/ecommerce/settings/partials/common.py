@@ -13,7 +13,7 @@ CORS_ALLOW_CREDENTIALS = True
 OSCAR_DEFAULT_CURRENCY = "{{ ECOMMERCE_CURRENCY }}"
 
 EDX_API_KEY = "{{ ECOMMERCE_API_KEY }}"
-{% set jwt_rsa_key = rsa_import_key(JWT_RSA_PRIVATE_KEY) %}
+{% set jwt_rsa_key | rsa_import_key %}{{ JWT_RSA_PRIVATE_KEY }}{% endset %}
 JWT_AUTH["JWT_ISSUER"] = "{{ JWT_COMMON_ISSUER }}"
 JWT_AUTH["JWT_AUDIENCE"] = "{{ JWT_COMMON_AUDIENCE }}"
 JWT_AUTH["JWT_SECRET_KEY"] = "{{ JWT_COMMON_SECRET_KEY }}"
