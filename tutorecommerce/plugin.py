@@ -79,48 +79,73 @@ config = {
 }
 
 # Initialization hooks
-tutor_hooks.Filters.COMMANDS_INIT.add_item((
-    "mysql",
-    ("ecommerce", "tasks", "mysql", "init"),
-))
-tutor_hooks.Filters.COMMANDS_INIT.add_item((
-    "lms",
-    ("ecommerce", "tasks", "lms", "init"),
-))
-tutor_hooks.Filters.COMMANDS_INIT.add_item((
-    "ecommerce",
-    ("ecommerce", "tasks", "ecommerce", "init"),
-))
+for service in ("mysql", "lms", "ecommerce"):
+    with open(
+        os.path.join(
+            pkg_resources.resource_filename("tutorecommerce", "templates"),
+            "ecommerce",
+            "tasks",
+            service,
+            "init",
+        ),
+        encoding="utf-8",
+    ) as task_file:
+        tutor_hooks.Filters.CLI_DO_INIT_TASKS.add_item((service, task_file.read()))
 
 # Image management
-tutor_hooks.Filters.IMAGES_BUILD.add_item((
-    "ecommerce",
-    ("plugins", "ecommerce", "build", "ecommerce"),
-    "{{ ECOMMERCE_DOCKER_IMAGE }}",
-    (),
-))
-tutor_hooks.Filters.IMAGES_BUILD.add_item((
-    "ecommerce-worker",
-    ("plugins", "ecommerce", "build", "ecommerce-worker"),
-    "{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
-    (),
-))
-tutor_hooks.Filters.IMAGES_PULL.add_item((
-    "ecommerce",
-    "{{ ECOMMERCE_DOCKER_IMAGE }}",
-))
-tutor_hooks.Filters.IMAGES_PULL.add_item((
-    "ecommerce-worker",
-    "{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
-))
-tutor_hooks.Filters.IMAGES_PUSH.add_item((
-    "ecommerce",
-    "{{ ECOMMERCE_DOCKER_IMAGE }}",
-))
-tutor_hooks.Filters.IMAGES_PUSH.add_item((
-    "ecommerce-worker",
-    "{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
-))
+tutor_hooks.Filters.IMAGES_BUILD.add_items(
+    [
+        (
+            "ecommerce",
+            ("plugins", "ecommerce", "build", "ecommerce"),
+            "{{ ECOMMERCE_DOCKER_IMAGE }}",
+            (),
+        ),
+        (
+            "ecommerce-worker",
+            ("plugins", "ecommerce", "build", "ecommerce-worker"),
+            "{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
+            (),
+        ),
+    ]
+)
+tutor_hooks.Filters.IMAGES_PULL.add_items(
+    [
+        (
+            "ecommerce",
+            "{{ ECOMMERCE_DOCKER_IMAGE }}",
+        ),
+        (
+            "ecommerce-worker",
+            "{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
+        ),
+    ]
+)
+tutor_hooks.Filters.IMAGES_PUSH.add_items(
+    [
+        (
+            "ecommerce",
+            "{{ ECOMMERCE_DOCKER_IMAGE }}",
+        ),
+        (
+            "ecommerce-worker",
+            "{{ ECOMMERCE_WORKER_DOCKER_IMAGE }}",
+        ),
+    ]
+)
+for mfe in ["orders", "payment"]:
+    name = f"{mfe}-dev"
+    tag = "{{ DOCKER_REGISTRY }}overhangio/openedx-" + mfe + "-dev:{{ MFE_VERSION }}"
+    tutor_hooks.Filters.IMAGES_BUILD.add_item(
+        (
+            name,
+            ("plugins", "mfe", "build", "mfe"),
+            tag,
+            (f"--target={mfe}-dev",),
+        )
+    )
+    tutor_hooks.Filters.IMAGES_PULL.add_item((name, tag))
+    tutor_hooks.Filters.IMAGES_PUSH.add_item((name, tag))
 
 ####### Boilerplate code
 # Add the "templates" folder as a template root
@@ -142,18 +167,16 @@ for path in glob(
     )
 ):
     with open(path, encoding="utf-8") as patch_file:
-        tutor_hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
+        tutor_hooks.Filters.ENV_PATCHES.add_item(
+            (os.path.basename(path), patch_file.read())
+        )
 # Add configuration entries
 tutor_hooks.Filters.CONFIG_DEFAULTS.add_items(
-    [
-        (f"ECOMMERCE_{key}", value)
-        for key, value in config.get("defaults", {}).items()
-    ]
+    [(f"ECOMMERCE_{key}", value) for key, value in config.get("defaults", {}).items()]
 )
 tutor_hooks.Filters.CONFIG_UNIQUE.add_items(
-    [
-        (f"ECOMMERCE_{key}", value)
-        for key, value in config.get("unique", {}).items()
-    ]
+    [(f"ECOMMERCE_{key}", value) for key, value in config.get("unique", {}).items()]
 )
-tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(list(config.get("overrides", {}).items()))
+tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(
+    list(config.get("overrides", {}).items())
+)
