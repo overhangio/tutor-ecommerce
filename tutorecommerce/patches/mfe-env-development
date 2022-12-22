@@ -1,2 +1,0 @@
-ECOMMERCE_BASE_URL='http://{{ ECOMMERCE_HOST }}:8130'
-ORDER_HISTORY_URL='http://{{ MFE_HOST }}:{{ ECOMMERCE_MFE_APP['port'] }}/{{ ECOMMERCE_MFE_APP['name'] }}/orders'
