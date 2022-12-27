@@ -33,7 +33,7 @@ RUN git config --global user.email "tutor@overhang.io" \
   && git config --global user.name "Tutor"
 
 # nodejs requirements (aka: "make requirements.js")
-ARG NPM_REGISTRY=https://registry.npmjs.org/
+ARG NPM_REGISTRY={{ NPM_REGISTRY }}
 RUN npm install --verbose --registry=$NPM_REGISTRY
 RUN ./node_modules/.bin/bower install --allow-root
 
