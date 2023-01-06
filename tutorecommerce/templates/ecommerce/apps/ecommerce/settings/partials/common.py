@@ -1,4 +1,5 @@
 import json
+import os
 
 SECRET_KEY = "{{ ECOMMERCE_SECRET_KEY }}"
 ALLOWED_HOSTS = [
@@ -77,7 +78,13 @@ LOGGING["handlers"].pop("local")
 for logger in LOGGING["loggers"].values():
     logger["handlers"].remove("local")
 
-common_payment_processor_config = json.loads("""{{ ECOMMERCE_PAYMENT_PROCESSORS|tojson(indent=4) }}""")
+# Load payment processors
+with open(
+    os.path.join(os.path.dirname(__file__), "paymentprocessors.json"),
+    encoding="utf8"
+) as payment_processors_file:
+    common_payment_processor_config = json.load(payment_processors_file)
+
 # Fix cybersource-rest configuration
 if "cybersource" in common_payment_processor_config and "cybersource-rest" not in common_payment_processor_config:
     common_payment_processor_config["cybersource-rest"] = common_payment_processor_config["cybersource"]
