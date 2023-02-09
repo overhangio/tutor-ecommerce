@@ -8,7 +8,9 @@ with io.open(os.path.join(here, "README.rst"), "rt", encoding="utf8") as f:
     readme = f.read()
 
 about = {}
-with io.open(os.path.join(here, "tutorecommerce", "__about__.py"), "rt", encoding="utf-8") as f:
+with io.open(
+    os.path.join(here, "tutorecommerce", "__about__.py"), "rt", encoding="utf-8"
+) as f:
     exec(f.read(), about)
 
 setup(
@@ -31,7 +33,11 @@ setup(
     packages=find_packages(exclude=["tests*"]),
     include_package_data=True,
     python_requires=">=3.7",
-    install_requires=["tutor>=15.0.0,<16.0.0", "tutor-discovery>=15.0.0,<16.0.0", "tutor-mfe>=15.0.0,<16.0.0"],
+    install_requires=[
+        "tutor>=15.0.0,<16.0.0",
+        "tutor-discovery>=15.0.0,<16.0.0",
+        "tutor-mfe>=15.0.0,<16.0.0",
+    ],
     entry_points={"tutor.plugin.v1": ["ecommerce = tutorecommerce.plugin"]},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
