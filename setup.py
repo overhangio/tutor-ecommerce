@@ -38,6 +38,7 @@ setup(
         "tutor-discovery>=15.0.0,<16.0.0",
         "tutor-mfe>=15.0.0,<16.0.0",
     ],
+    extras_require={"dev": ["scriv"]},
     entry_points={"tutor.plugin.v1": ["ecommerce = tutorecommerce.plugin"]},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
