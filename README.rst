@@ -12,7 +12,7 @@ This plugin requires tutor>=12.0.0, the `Discovery plugin <https://github.com/ov
 
 But if you have installed tutor from source, then you also need to install the plugin from source::
 
-    pip install tutor-ecommerce
+    tutor plugins install ecommerce
 
 Then, in any case you need to enable the plugins::
 
