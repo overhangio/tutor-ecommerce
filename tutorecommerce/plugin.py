@@ -188,9 +188,9 @@ tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(
 @tutor_hooks.Filters.APP_PUBLIC_HOSTS.add()
 def _print_ecommerce_public_hosts(hosts: list[str], context_name: t.Literal["local", "dev"]) -> list[str]:
     if context_name == "dev":
-        hosts += ["ecommerce.{{ LMS_HOST }}:8130"]
+        hosts += ["{{ ECOMMERCE_HOST }}:8130"]
     else:
-        hosts += ["ecommerce.{{ LMS_HOST }}"]
+        hosts += ["{{ ECOMMERCE_HOST }}"]
     return hosts
 
 
