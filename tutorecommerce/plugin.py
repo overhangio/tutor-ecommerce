@@ -1,7 +1,10 @@
+from __future__ import annotations
+
 from glob import glob
 import os
 
 import pkg_resources
+import typing as t
 
 from tutor import hooks as tutor_hooks
 
@@ -180,3 +183,35 @@ tutor_hooks.Filters.CONFIG_UNIQUE.add_items(
 tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(
     list(config.get("overrides", {}).items())
 )
+
+
+@tutor_hooks.Filters.APP_PUBLIC_HOSTS.add()
+def _print_ecommerce_public_hosts(hosts: list[str], context_name: t.Literal["local", "dev"]) -> list[str]:
+    if context_name == "dev":
+        hosts += ["ecommerce.{{ LMS_HOST }}:8130"]
+    else:
+        hosts += ["ecommerce.{{ LMS_HOST }}"]
+    return hosts
+
+
+REPO_NAME = "ecommerce"
+
+
+# Automount /openedx/ecommerce folder from the container
+@tutor_hooks.Filters.COMPOSE_MOUNTS.add()
+def _mount_ecommerce_apps(mounts, path_basename):
+    if path_basename == REPO_NAME:
+        app_name = REPO_NAME
+        mounts += [(app_name, "/openedx/ecommerce")]
+    return mounts
+
+
+# Bind-mount repo at build-time, both for prod and dev images
+@tutor_hooks.Filters.IMAGES_BUILD_MOUNTS.add()
+def _mount_ecommerce_on_build(mounts: list[tuple[str, str]], host_path: str) -> list[tuple[str, str]]:
+    path_basename = os.path.basename(host_path)
+    if path_basename == REPO_NAME:
+        app_name = REPO_NAME
+        mounts.append((app_name, f"{app_name}-src"))
+        mounts.append((f"{app_name}-dev", f"{app_name}-src"))
+    return mounts

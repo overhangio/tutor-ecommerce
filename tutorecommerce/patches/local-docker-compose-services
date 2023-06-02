@@ -7,8 +7,8 @@ ecommerce:
     - ../plugins/ecommerce/apps/ecommerce/settings:/openedx/ecommerce/ecommerce/settings/tutor:ro
   depends_on:
     - discovery
+    - lms
     {% if RUN_MYSQL %}- mysql{% endif %}
-    {% if RUN_LMS %}- lms{% endif %}
 
 ecommerce-worker:
     image: {{ ECOMMERCE_WORKER_DOCKER_IMAGE }}
