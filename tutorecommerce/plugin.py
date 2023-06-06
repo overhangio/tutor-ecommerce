@@ -7,6 +7,7 @@ import pkg_resources
 import typing as t
 
 from tutor import hooks as tutor_hooks
+from tutormfe.plugin import MFE_APPS, MFE_ATTRS_TYPE
 
 from .__about__ import __version__
 
@@ -80,6 +81,27 @@ config = {
         },
     },
 }
+
+
+CORE_MFE_APPS: dict[str, MFE_ATTRS_TYPE] = {
+    "orders": {
+        "repository": "https://github.com/edx/frontend-app-ecommerce",
+        "port": 1996,
+    },
+    "payment": {
+        "repository": "https://github.com/edx/frontend-app-payment",
+        "port": 1998,
+    },
+}
+
+
+# The core MFEs are added with a high priority, such that other users can override or
+# remove them.
+@MFE_APPS.add(priority=tutor_hooks.priorities.HIGH)
+def _add_core_mfe_apps(apps: dict[str, MFE_ATTRS_TYPE]) -> dict[str, MFE_ATTRS_TYPE]:
+    apps.update(CORE_MFE_APPS)
+    return apps
+
 
 # Initialization hooks
 for service in ("mysql", "lms", "ecommerce"):
