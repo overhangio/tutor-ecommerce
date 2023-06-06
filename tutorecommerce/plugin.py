@@ -83,23 +83,20 @@ config = {
 }
 
 
-CORE_MFE_APPS: dict[str, MFE_ATTRS_TYPE] = {
-    "orders": {
-        "repository": "https://github.com/edx/frontend-app-ecommerce",
-        "port": 1996,
-    },
-    "payment": {
-        "repository": "https://github.com/edx/frontend-app-payment",
-        "port": 1998,
-    },
-}
-
-
-# The core MFEs are added with a high priority, such that other users can override or
-# remove them.
-@MFE_APPS.add(priority=tutor_hooks.priorities.HIGH)
-def _add_core_mfe_apps(apps: dict[str, MFE_ATTRS_TYPE]) -> dict[str, MFE_ATTRS_TYPE]:
-    apps.update(CORE_MFE_APPS)
+@MFE_APPS.add()
+def _add_ecommerce_mfe_apps(apps: dict[str, MFE_ATTRS_TYPE]) -> dict[str, MFE_ATTRS_TYPE]:
+    apps.update(
+        {
+            "orders": {
+                "repository": "https://github.com/edx/frontend-app-ecommerce",
+                "port": 1996,
+            },
+            "payment": {
+                "repository": "https://github.com/edx/frontend-app-payment",
+                "port": 1998,
+            },
+        }
+    )
     return apps
 
 
@@ -174,9 +171,7 @@ for mfe in ["orders", "payment"]:
 
 ####### Boilerplate code
 # Add the "templates" folder as a template root
-tutor_hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(
-    pkg_resources.resource_filename("tutorecommerce", "templates")
-)
+tutor_hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(pkg_resources.resource_filename("tutorecommerce", "templates"))
 # Render the "build" and "apps" folders
 tutor_hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
     [
@@ -192,9 +187,7 @@ for path in glob(
     )
 ):
     with open(path, encoding="utf-8") as patch_file:
-        tutor_hooks.Filters.ENV_PATCHES.add_item(
-            (os.path.basename(path), patch_file.read())
-        )
+        tutor_hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
 # Add configuration entries
 tutor_hooks.Filters.CONFIG_DEFAULTS.add_items(
     [(f"ECOMMERCE_{key}", value) for key, value in config.get("defaults", {}).items()]
@@ -202,9 +195,7 @@ tutor_hooks.Filters.CONFIG_DEFAULTS.add_items(
 tutor_hooks.Filters.CONFIG_UNIQUE.add_items(
     [(f"ECOMMERCE_{key}", value) for key, value in config.get("unique", {}).items()]
 )
-tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(
-    list(config.get("overrides", {}).items())
-)
+tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(list(config.get("overrides", {}).items()))
 
 
 @tutor_hooks.Filters.APP_PUBLIC_HOSTS.add()
