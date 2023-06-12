@@ -91,8 +91,13 @@ if "cybersource" in common_payment_processor_config and "cybersource-rest" not i
 PAYMENT_PROCESSOR_CONFIG = {
     "openedx": common_payment_processor_config,
     "dev": common_payment_processor_config,
-    "edx" : common_payment_processor_config,
-    "other" : common_payment_processor_config,
+}
+# Dummy config is required to bypass a KeyError
+PAYMENT_PROCESSOR_CONFIG["edx"] = {
+    "stripe": {
+        "secret_key": "",
+        "webhook_endpoint_secret": "",
+    }
 }
 PAYMENT_PROCESSORS = list(PAYMENT_PROCESSORS) + {{ ECOMMERCE_EXTRA_PAYMENT_PROCESSOR_CLASSES }}
 

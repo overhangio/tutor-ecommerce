@@ -7,6 +7,8 @@ import pkg_resources
 import typing as t
 
 from tutor import hooks as tutor_hooks
+# TODO this causes the MFE plugin filters to be included in the ecommerce context, which sucks...
+# We must migrate those hooks to tutormfe.hooks
 from tutormfe.plugin import MFE_APPS, MFE_ATTRS_TYPE
 
 from .__about__ import __version__
