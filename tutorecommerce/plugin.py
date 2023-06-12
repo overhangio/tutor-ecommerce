@@ -207,15 +207,16 @@ def _print_ecommerce_public_hosts(hosts: list[str], context_name: t.Literal["loc
     return hosts
 
 
-REPO_NAME = "ecommerce"
-
-
 # Automount /openedx/ecommerce folder from the container
 @tutor_hooks.Filters.COMPOSE_MOUNTS.add()
 def _mount_ecommerce_apps(mounts, path_basename):
-    if path_basename == REPO_NAME:
-        app_name = REPO_NAME
-        mounts += [(app_name, "/openedx/ecommerce")]
+    if path_basename == "ecommerce":
+        mounts += [("ecommerce", "/openedx/ecommerce")]
+    elif path_basename == "frontend-app-ecommerce":
+        # payment MFE will be handled by the tutor-mfe plugin, but we need to fix the
+        # auto-mount for the ecommerce/order MFE
+        mounts.remove(("ecommerce", "/openedx/app"))
+        mounts.append(("orders", "/openedx/app"))
     return mounts
 
 
@@ -223,8 +224,11 @@ def _mount_ecommerce_apps(mounts, path_basename):
 @tutor_hooks.Filters.IMAGES_BUILD_MOUNTS.add()
 def _mount_ecommerce_on_build(mounts: list[tuple[str, str]], host_path: str) -> list[tuple[str, str]]:
     path_basename = os.path.basename(host_path)
-    if path_basename == REPO_NAME:
-        app_name = REPO_NAME
-        mounts.append((app_name, f"{app_name}-src"))
-        mounts.append((f"{app_name}-dev", f"{app_name}-src"))
+    # payment MFE will be handled by the tutor-mfe plugin, but we need to fix the
+    # auto-mount for the ecommerce/order MFE
+    if path_basename == "frontend-app-ecommerce":
+        mounts.remove(("mfe", "ecommerce-src"))
+        mounts.remove(("ecommerce-dev", "ecommerce-src"))
+        mounts.append(("mfe", "orders-src"))
+        mounts.append(("orders-dev", "orders-src"))
     return mounts
