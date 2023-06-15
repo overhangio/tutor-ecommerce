@@ -1,9 +1,13 @@
+from __future__ import annotations
+
 from glob import glob
 import os
+import typing as t
 
 import pkg_resources
 
 from tutor import hooks as tutor_hooks
+from tutormfe.hooks import MFE_APPS, MFE_ATTRS_TYPE
 
 from .__about__ import __version__
 
@@ -78,6 +82,24 @@ config = {
     },
 }
 
+
+@MFE_APPS.add()
+def _add_ecommerce_mfe_apps(apps: dict[str, MFE_ATTRS_TYPE]) -> dict[str, MFE_ATTRS_TYPE]:
+    apps.update(
+        {
+            "orders": {
+                "repository": "https://github.com/edx/frontend-app-ecommerce",
+                "port": 1996,
+            },
+            "payment": {
+                "repository": "https://github.com/edx/frontend-app-payment",
+                "port": 1998,
+            },
+        }
+    )
+    return apps
+
+
 # Initialization hooks
 for service in ("mysql", "lms", "ecommerce"):
     with open(
@@ -149,9 +171,7 @@ for mfe in ["orders", "payment"]:
 
 ####### Boilerplate code
 # Add the "templates" folder as a template root
-tutor_hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(
-    pkg_resources.resource_filename("tutorecommerce", "templates")
-)
+tutor_hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(pkg_resources.resource_filename("tutorecommerce", "templates"))
 # Render the "build" and "apps" folders
 tutor_hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
     [
@@ -167,9 +187,7 @@ for path in glob(
     )
 ):
     with open(path, encoding="utf-8") as patch_file:
-        tutor_hooks.Filters.ENV_PATCHES.add_item(
-            (os.path.basename(path), patch_file.read())
-        )
+        tutor_hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
 # Add configuration entries
 tutor_hooks.Filters.CONFIG_DEFAULTS.add_items(
     [(f"ECOMMERCE_{key}", value) for key, value in config.get("defaults", {}).items()]
@@ -177,6 +195,40 @@ tutor_hooks.Filters.CONFIG_DEFAULTS.add_items(
 tutor_hooks.Filters.CONFIG_UNIQUE.add_items(
     [(f"ECOMMERCE_{key}", value) for key, value in config.get("unique", {}).items()]
 )
-tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(
-    list(config.get("overrides", {}).items())
-)
+tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(list(config.get("overrides", {}).items()))
+
+
+@tutor_hooks.Filters.APP_PUBLIC_HOSTS.add()
+def _print_ecommerce_public_hosts(hosts: list[str], context_name: t.Literal["local", "dev"]) -> list[str]:
+    if context_name == "dev":
+        hosts += ["{{ ECOMMERCE_HOST }}:8130"]
+    else:
+        hosts += ["{{ ECOMMERCE_HOST }}"]
+    return hosts
+
+
+# Automount /openedx/ecommerce folder from the container
+@tutor_hooks.Filters.COMPOSE_MOUNTS.add()
+def _mount_ecommerce_apps(mounts, path_basename):
+    if path_basename == "ecommerce":
+        mounts += [("ecommerce", "/openedx/ecommerce")]
+    elif path_basename == "frontend-app-ecommerce":
+        # payment MFE will be handled by the tutor-mfe plugin, but we need to fix the
+        # auto-mount for the ecommerce/order MFE
+        mounts.remove(("ecommerce", "/openedx/app"))
+        mounts.append(("orders", "/openedx/app"))
+    return mounts
+
+
+# Bind-mount repo at build-time, both for prod and dev images
+@tutor_hooks.Filters.IMAGES_BUILD_MOUNTS.add()
+def _mount_ecommerce_on_build(mounts: list[tuple[str, str]], host_path: str) -> list[tuple[str, str]]:
+    path_basename = os.path.basename(host_path)
+    # payment MFE will be handled by the tutor-mfe plugin, but we need to fix the
+    # auto-mount for the ecommerce/order MFE
+    if path_basename == "frontend-app-ecommerce":
+        mounts.remove(("mfe", "ecommerce-src"))
+        mounts.remove(("ecommerce-dev", "ecommerce-src"))
+        mounts.append(("mfe", "orders-src"))
+        mounts.append(("orders-dev", "orders-src"))
+    return mounts
