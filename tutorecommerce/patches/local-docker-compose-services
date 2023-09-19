@@ -5,6 +5,9 @@ ecommerce:
   restart: unless-stopped
   volumes:
     - ../plugins/ecommerce/apps/ecommerce/settings:/openedx/ecommerce/ecommerce/settings/tutor:ro
+    {%- for mount in iter_mounts(MOUNTS, "ecommerce") %}
+    - {{ mount }}
+    {%- endfor %}
   depends_on:
     - discovery
     - lms

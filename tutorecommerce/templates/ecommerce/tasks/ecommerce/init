@@ -42,3 +42,12 @@
   --discovery_api_url={% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ DISCOVERY_HOST }}/api/v1/ \
   --enable-microfrontend-for-basket-page=true \
   --payment-microfrontend-url="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ MFE_HOST }}/{{ ECOMMERCE_PAYMENT_MFE_APP['name'] }}"
+
+if [ ! -e /openedx/ecommerce/node_modules ]
+then
+  # node_modules directory does not exist, this almost certainly means that the
+  # ecommerce directory was bind-mounted. We need to bootstrap that directory.
+  npm clean-install --verbose --no-audit
+  ./node_modules/.bin/bower install --allow-root
+  ./manage.py update_assets --skip-collect
+fi

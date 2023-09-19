@@ -224,9 +224,11 @@ def _mount_ecommerce_apps(mounts, path_basename):
 @tutor_hooks.Filters.IMAGES_BUILD_MOUNTS.add()
 def _mount_ecommerce_on_build(mounts: list[tuple[str, str]], host_path: str) -> list[tuple[str, str]]:
     path_basename = os.path.basename(host_path)
-    # payment MFE will be handled by the tutor-mfe plugin, but we need to fix the
-    # auto-mount for the ecommerce/order MFE
-    if path_basename == "frontend-app-ecommerce":
+    if path_basename == "ecommerce":
+        mounts.append(("ecommerce", "ecommerce-src"))
+    elif path_basename == "frontend-app-ecommerce":
+        # payment MFE will be handled by the tutor-mfe plugin, but we need to fix the
+        # auto-mount for the ecommerce/order MFE
         mounts.remove(("mfe", "ecommerce-src"))
         mounts.remove(("ecommerce-dev", "ecommerce-src"))
         mounts.append(("mfe", "orders-src"))
