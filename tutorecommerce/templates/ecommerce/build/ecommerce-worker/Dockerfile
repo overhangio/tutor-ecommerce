@@ -1,9 +1,10 @@
 {% if is_buildkit_enabled() %}# syntax=docker/dockerfile:1.4{% endif %}
 ###### Minimal image with base system requirements for most stages
-FROM docker.io/ubuntu:20.04 as minimal
+ARG DOCKER_REGISTRY={{ DOCKER_REGISTRY }}
+FROM ${DOCKER_REGISTRY}/ubuntu:20.04 as minimal
 
 RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,target=/var/lib/apt,sharing=locked{% endif %} \ 
+    --mount=type=cache,target=/var/lib/apt,sharing=locked{% endif %} \
     apt update && \
     apt install -y git-core language-pack-en python3 python3-pip python3-venv
 
