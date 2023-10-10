@@ -20,7 +20,7 @@ Then, in any case you need to enable the plugins::
 
 Services will have to be re-configured and restarted, so you are probably better off just running launch again::
 
-    tutor local launch 
+    tutor local launch
 
 Note that this plugins is compatible with `Kubernetes integration <http://docs.tutor.overhang.io/k8s.html>`__. When deploying to a Kubernetes cluster, run instead::
 
@@ -124,19 +124,17 @@ Development
 
 When running Tutor in development mode, the ecommerce service is accessible at http://ecommerce.local.overhang.io:8130.
 
-To mount a local ecommerce repository in the ecommerce container, add the following content to the ``$(tutor config printroot)/env/dev/docker-compose.override.yml`` file::
+To mount a local ecommerce repository in the ecommerce container, add an auto-mounted repository with::
 
-    version: "3.7"
-    services:
-      ecommerce:
-        volumes:
-          - /absolute/path/to/ecommerce:/openedx/ecommerce
+    tutor mounts add /path/to/ecommerce
 
-You will have to generate static assets in your local repository::
+Rebuild the "ecommerce" Docker image::
 
-    tutor dev run ecommerce npm install
-    tutor dev run ecommerce ./node_modules/.bin/bower install --allow-root
-    tutor dev run ecommerce python3 manage.py update_assets --skip-collect
+    tutor images build ecommerce
+
+Lauch your platform again::
+
+    tutor dev launch
 
 To attach a debugger to the ecommerce service, run::
 
