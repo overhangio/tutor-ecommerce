@@ -1,9 +1,9 @@
-{% if is_buildkit_enabled() %}# syntax=docker/dockerfile:1.4{% endif %}
+# syntax=docker/dockerfile:1.4
 ###### Minimal image with base system requirements for most stages
 FROM docker.io/ubuntu:20.04 as minimal
 
-RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,target=/var/lib/apt,sharing=locked{% endif %} \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt update && \
     apt install -y curl git-core language-pack-en
 
@@ -28,8 +28,8 @@ COPY --from=checkout /openedx/ecommerce /
 ###### Install python and virtual environment
 FROM minimal as python
 
-RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,target=/var/lib/apt,sharing=locked{% endif %} \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt update && \
     apt install -y libmysqlclient-dev libssl-dev python3 python3-pip python3-venv
 
@@ -44,15 +44,15 @@ RUN mkdir /openedx/.cache
 # Create python venv
 RUN python3 -m venv /openedx/venv/
 ENV PATH "/openedx/venv/bin:$PATH"
-RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} {% endif %}pip install \
+RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} pip install \
     # https://pypi.org/project/setuptools/
     # https://pypi.org/project/pip/
     # https://pypi.org/project/wheel/
-    setuptools==67.7.2 pip==23.1.2. wheel==0.40.0
+    setuptools==68.2.2 pip==23.2.1 wheel==0.41.2
 
 # Install a recent version of nodejs
 # https://pypi.org/project/nodeenv
-RUN pip install nodeenv==1.7.0
+RUN pip install nodeenv==1.8.0
 RUN nodeenv /openedx/nodeenv --node=16.20.0 --prebuilt
 ENV PATH /openedx/nodeenv/bin:${PATH}
 
@@ -62,13 +62,13 @@ WORKDIR /openedx/ecommerce
 
 # Install npm, bower requirements
 ARG NPM_REGISTRY='{{ NPM_REGISTRY }}'
-RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.npm/,sharing=shared,uid=${APP_USER_ID} {% endif %}npm clean-install --verbose --no-audit --registry=$NPM_REGISTRY
-RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/bower,sharing=shared,uid=${APP_USER_ID} {% endif %}./node_modules/.bin/bower install --allow-root
+RUN --mount=type=cache,target=/openedx/.npm/,sharing=shared,uid=${APP_USER_ID} npm clean-install --verbose --no-audit --registry=$NPM_REGISTRY
+RUN --mount=type=cache,target=/openedx/.cache/bower,sharing=shared,uid=${APP_USER_ID} node_modules/.bin/bower install --allow-root
 
 # python requirements
-RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} {% endif %}pip install -r requirements.txt
+RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} pip install -r requirements.txt
 # https://pypi.org/project/uWSGI/
-RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} {% endif %}pip install uwsgi==2.0.21
+RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} pip install uwsgi==2.0.21
 
 # Install private requirements: this is useful for installing custom payment processors.
 COPY --chown=app:app ./requirements/ /openedx/requirements
@@ -76,7 +76,7 @@ RUN cd /openedx/requirements/ \
   && touch ./private.txt \
   && pip install -r ./private.txt
 
-{% for extra_requirement in ECOMMERCE_EXTRA_PIP_REQUIREMENTS %}RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} {% endif %}pip install '{{ extra_requirement }}'
+{% for extra_requirement in ECOMMERCE_EXTRA_PIP_REQUIREMENTS %}RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} pip install '{{ extra_requirement }}'
 {% endfor %}
 
 {{ patch("ecommerce-dockerfile-pre-assets") }}

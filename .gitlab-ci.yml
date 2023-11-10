@@ -3,7 +3,7 @@ variables:
     TUTOR_IMAGES: ecommerce ecommerce-worker orders-dev payment-dev
     TUTOR_PYPI_PACKAGE: tutor-ecommerce
     TUTOR_EXTRA_ENABLED_PLUGINS: discovery mfe
-    OPENEDX_RELEASE: palm
+    OPENEDX_RELEASE: quince
     GITHUB_REPO: overhangio/tutor-ecommerce
 
 include:
