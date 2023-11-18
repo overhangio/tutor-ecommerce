@@ -132,7 +132,7 @@ Rebuild the "ecommerce" Docker image::
 
     tutor images build ecommerce
 
-Lauch your platform again::
+Launch your platform again::
 
     tutor dev launch
 
