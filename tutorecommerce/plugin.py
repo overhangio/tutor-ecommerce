@@ -214,7 +214,9 @@ def _print_ecommerce_public_hosts(hosts: list[str], context_name: t.Literal["loc
 
 # Automount /openedx/ecommerce folder from the container
 @tutor_hooks.Filters.COMPOSE_MOUNTS.add()
-def _mount_ecommerce_apps(mounts, path_basename):
+def _mount_ecommerce_apps(
+    mounts: list[tuple[str, str]], path_basename: str
+) -> list[tuple[str, str]]:
     if path_basename == "ecommerce":
         mounts += [("ecommerce", "/openedx/ecommerce")]
     elif path_basename == "frontend-app-ecommerce":
