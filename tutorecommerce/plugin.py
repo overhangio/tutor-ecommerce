@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-from glob import glob
 import os
 import typing as t
+from glob import glob
 
 import pkg_resources
-
 from tutor import hooks as tutor_hooks
 from tutor.__about__ import __version_suffix__
 from tutormfe.hooks import MFE_APPS, MFE_ATTRS_TYPE
@@ -17,35 +16,6 @@ if __version_suffix__:
     __version__ += "-" + __version_suffix__
 
 config = {
-    "unique": {
-        "MYSQL_PASSWORD": "{{ 8|random_string }}",
-        "SECRET_KEY": "{{ 20|random_string }}",
-        "OAUTH2_SECRET": "{{ 8|random_string }}",
-        "OAUTH2_SECRET_SSO": "{{ 8|random_string }}",
-        "API_KEY": "{{ 20|random_string }}",
-        "PAYMENT_PROCESSORS": {
-            "cybersource": {
-                "flex_shared_secret_key_id": "SET-ME-PLEASE",
-                "flex_shared_secret_key": "SET-ME-PLEASE",
-                "merchant_id": "SET-ME-PLEASE",
-                "soap_api_url": "https://ics2wstest.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.140.wsdl",
-                "transaction_key": "SET-ME-PLEASE",
-            },
-            "paypal": {
-                "mode": "sandbox",
-                "client_id": "SET-ME-PLEASE",
-                "client_secret": "SET-ME-PLEASE",
-                "cancel_checkout_path": "/checkout/cancel-checkout/",
-                "error_url": "/checkout/error/",
-                "receipt_url": "/checkout/receipt/",
-            },
-        },
-        "ENABLE_IDENTITY_VERIFICATION": True,
-        "ENABLED_PAYMENT_PROCESSORS": ["cybersource", "paypal"],
-        "ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS": ["cybersource"],
-        "EXTRA_PAYMENT_PROCESSOR_CLASSES": [],
-        "EXTRA_PAYMENT_PROCESSOR_URLS": {},
-    },
     "defaults": {
         "VERSION": __version__,
         "API_TIMEOUT": 5,
@@ -85,11 +55,42 @@ config = {
             },
         },
     },
+    "unique": {
+        "MYSQL_PASSWORD": "{{ 8|random_string }}",
+        "SECRET_KEY": "{{ 20|random_string }}",
+        "OAUTH2_SECRET": "{{ 8|random_string }}",
+        "OAUTH2_SECRET_SSO": "{{ 8|random_string }}",
+        "API_KEY": "{{ 20|random_string }}",
+        "PAYMENT_PROCESSORS": {
+            "cybersource": {
+                "flex_shared_secret_key_id": "SET-ME-PLEASE",
+                "flex_shared_secret_key": "SET-ME-PLEASE",
+                "merchant_id": "SET-ME-PLEASE",
+                "soap_api_url": "https://ics2wstest.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.140.wsdl",
+                "transaction_key": "SET-ME-PLEASE",
+            },
+            "paypal": {
+                "mode": "sandbox",
+                "client_id": "SET-ME-PLEASE",
+                "client_secret": "SET-ME-PLEASE",
+                "cancel_checkout_path": "/checkout/cancel-checkout/",
+                "error_url": "/checkout/error/",
+                "receipt_url": "/checkout/receipt/",
+            },
+        },
+        "ENABLE_IDENTITY_VERIFICATION": True,
+        "ENABLED_PAYMENT_PROCESSORS": ["cybersource", "paypal"],
+        "ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS": ["cybersource"],
+        "EXTRA_PAYMENT_PROCESSOR_CLASSES": [],
+        "EXTRA_PAYMENT_PROCESSOR_URLS": {},
+    },
 }
 
 
-@MFE_APPS.add()
-def _add_ecommerce_mfe_apps(apps: dict[str, MFE_ATTRS_TYPE]) -> dict[str, MFE_ATTRS_TYPE]:
+@MFE_APPS.add()  # type: ignore
+def _add_ecommerce_mfe_apps(
+    apps: dict[str, MFE_ATTRS_TYPE]
+) -> dict[str, MFE_ATTRS_TYPE]:
     apps.update(
         {
             "orders": {
@@ -176,7 +177,9 @@ for mfe in ["orders", "payment"]:
 
 ####### Boilerplate code
 # Add the "templates" folder as a template root
-tutor_hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(pkg_resources.resource_filename("tutorecommerce", "templates"))
+tutor_hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(
+    pkg_resources.resource_filename("tutorecommerce", "templates")
+)
 # Render the "build" and "apps" folders
 tutor_hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
     [
@@ -192,7 +195,9 @@ for path in glob(
     )
 ):
     with open(path, encoding="utf-8") as patch_file:
-        tutor_hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
+        tutor_hooks.Filters.ENV_PATCHES.add_item(
+            (os.path.basename(path), patch_file.read())
+        )
 # Add configuration entries
 tutor_hooks.Filters.CONFIG_DEFAULTS.add_items(
     [(f"ECOMMERCE_{key}", value) for key, value in config.get("defaults", {}).items()]
@@ -200,11 +205,15 @@ tutor_hooks.Filters.CONFIG_DEFAULTS.add_items(
 tutor_hooks.Filters.CONFIG_UNIQUE.add_items(
     [(f"ECOMMERCE_{key}", value) for key, value in config.get("unique", {}).items()]
 )
-tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(list(config.get("overrides", {}).items()))
+tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(
+    list(config.get("overrides", {}).items())
+)
 
 
 @tutor_hooks.Filters.APP_PUBLIC_HOSTS.add()
-def _print_ecommerce_public_hosts(hosts: list[str], context_name: t.Literal["local", "dev"]) -> list[str]:
+def _print_ecommerce_public_hosts(
+    hosts: list[str], context_name: t.Literal["local", "dev"]
+) -> list[str]:
     if context_name == "dev":
         hosts += ["{{ ECOMMERCE_HOST }}:8130"]
     else:
@@ -229,7 +238,9 @@ def _mount_ecommerce_apps(
 
 # Bind-mount repo at build-time, both for prod and dev images
 @tutor_hooks.Filters.IMAGES_BUILD_MOUNTS.add()
-def _mount_ecommerce_on_build(mounts: list[tuple[str, str]], host_path: str) -> list[tuple[str, str]]:
+def _mount_ecommerce_on_build(
+    mounts: list[tuple[str, str]], host_path: str
+) -> list[tuple[str, str]]:
     path_basename = os.path.basename(host_path)
     if path_basename == "ecommerce":
         mounts.append(("ecommerce", "ecommerce-src"))
