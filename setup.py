@@ -15,7 +15,7 @@ with io.open(
 
 setup(
     name="tutor-ecommerce",
-    version=about["__package_version__"],
+    version=about["__version__"],
     url="https://docs.tutor.overhang.io/",
     project_urls={
         "Documentation": "https://docs.tutor.overhang.io/",
