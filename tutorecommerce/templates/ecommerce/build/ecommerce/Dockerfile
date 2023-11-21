@@ -46,6 +46,10 @@ RUN cd /openedx/requirements/ \
 {% for extra_requirement in ECOMMERCE_EXTRA_PIP_REQUIREMENTS %}RUN pip install {{ extra_requirement }}
 {% endfor %}
 
+{%- if patch("ecommerce-dockerfile-pre-assets") %}
+{{ patch("ecommerce-dockerfile-pre-assets") }}
+{%- endif %}
+
 # Collect static assets (aka: "make static")
 COPY --chown=app:app assets.py ./ecommerce/settings/assets.py
 ENV DJANGO_SETTINGS_MODULE ecommerce.settings.assets
