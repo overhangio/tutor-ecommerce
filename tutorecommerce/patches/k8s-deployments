@@ -29,6 +29,9 @@ spec:
             - mountPath: /openedx/ecommerce/ecommerce/settings/tutor/production.py
               name: settings
               subPath: production.py
+            - mountPath: /openedx/ecommerce/ecommerce/settings/tutor/paymentprocessors.json
+              name: settings
+              subPath: paymentprocessors.json
           securityContext:
             allowPrivilegeEscalation: false
       volumes:
@@ -68,6 +71,9 @@ spec:
             - mountPath: /openedx/ecommerce_worker/ecommerce_worker/configuration/tutor/production.py
               name: settings
               subPath: production.py
+            - mountPath: /openedx/ecommerce_worker/ecommerce_worker/configuration/tutor/paymentprocessors.json
+              name: settings
+              subPath: paymentprocessors.json
           securityContext:
             allowPrivilegeEscalation: false
       volumes:

@@ -1,6 +1,8 @@
 - name: ecommerce-settings
   files:
     - plugins/ecommerce/apps/ecommerce/settings/production.py
+    - plugins/ecommerce/apps/ecommerce/settings/paymentprocessors.json
 - name: ecommerce-worker-settings
   files:
     - plugins/ecommerce/apps/ecommerce-worker/settings/production.py
+    - plugins/ecommerce/apps/ecommerce/settings/paymentprocessors.json

@@ -19,6 +19,9 @@ spec:
             - mountPath: /openedx/ecommerce/ecommerce/settings/tutor/production.py
               name: settings
               subPath: production.py
+            - mountPath: /openedx/ecommerce/ecommerce/settings/tutor/paymentprocessors.json
+              name: settings
+              subPath: paymentprocessors.json
       volumes:
         - name: settings
           configMap:
