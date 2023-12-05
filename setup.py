@@ -16,9 +16,9 @@ with io.open(
 setup(
     name="tutor-ecommerce",
     version=about["__version__"],
-    url="https://docs.tutor.overhang.io/",
+    url="https://docs.tutor.edly.io/",
     project_urls={
-        "Documentation": "https://docs.tutor.overhang.io/",
+        "Documentation": "https://docs.tutor.edly.io/",
         "Code": "https://github.com/overhangio/tutor-ecommerce",
         "Issue tracker": "https://github.com/overhangio/tutor-ecommerce/issues",
         "Community": "https://discuss.openedx.org",

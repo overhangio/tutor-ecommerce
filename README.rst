@@ -1,7 +1,7 @@
-E-Commerce plugin for `Tutor <https://docs.tutor.overhang.io>`_
+E-Commerce plugin for `Tutor <https://docs.tutor.edly.io>`_
 ===============================================================
 
-This is a plugin for `Tutor <https://docs.tutor.overhang.io>`_ that integrates the `E-Commerce <https://github.com/edx/ecommerce/>`__ application in an Open edX platform.
+This is a plugin for `Tutor <https://docs.tutor.edly.io>`_ that integrates the `E-Commerce <https://github.com/edx/ecommerce/>`__ application in an Open edX platform.
 
 Installation
 ------------
@@ -22,7 +22,7 @@ Services will have to be re-configured and restarted, so you are probably better
 
     tutor local launch
 
-Note that this plugins is compatible with `Kubernetes integration <http://docs.tutor.overhang.io/k8s.html>`__. When deploying to a Kubernetes cluster, run instead::
+Note that this plugins is compatible with `Kubernetes integration <http://docs.tutor.edly.io/k8s.html>`__. When deploying to a Kubernetes cluster, run instead::
 
     tutor k8s launch
 
@@ -143,12 +143,12 @@ To attach a debugger to the ecommerce service, run::
 Troubleshooting
 ---------------
 
-This Tutor plugin is maintained by Muhammad Faraz Maqsood from `Edly <https://edly.io/>`__. Community support is available from the official `Open edX forum <https://discuss.openedx.org>`__. Do you need help with this plugin? See the `troubleshooting <https://docs.tutor.overhang.io/troubleshooting.html>`__ section from the Tutor documentation.
+This Tutor plugin is maintained by Muhammad Faraz Maqsood from `Edly <https://edly.io/>`__. Community support is available from the official `Open edX forum <https://discuss.openedx.org>`__. Do you need help with this plugin? See the `troubleshooting <https://docs.tutor.edly.io/troubleshooting.html>`__ section from the Tutor documentation.
 
 Contributing
 ------------
 
-Pull requests are welcome! Please read the `"contributing" section from the Tutor documentation <https://docs.tutor.overhang.io/tutor.html#contributing>`__.
+Pull requests are welcome! Please read the `"contributing" section from the Tutor documentation <https://docs.tutor.edly.io/tutor.html#contributing>`__.
 
 License
 -------
