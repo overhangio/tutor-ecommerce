@@ -31,29 +31,6 @@ config = {
         "OAUTH2_KEY_SSO": "ecommerce-sso",
         "OAUTH2_KEY_SSO_DEV": "ecommerce-sso-dev",
         "WORKER_JWT_ISSUER": "ecommerce-worker",  # TODO do we need to keep this?
-        # Micro frontend applications
-        "MFE_APP": {
-            "name": "orders",
-            "repository": "https://github.com/edx/frontend-app-ecommerce",
-            "port": 1996,
-        },
-        "PAYMENT_MFE_APP": {
-            "name": "payment",
-            "repository": "https://github.com/edx/frontend-app-payment",
-            "port": 1998,
-            "env": {
-                "production": {
-                    # Hardcoded in edx-platform
-                    "CURRENCY_COOKIE_NAME": "edx-price-l10n",
-                    # TODO set customizable value
-                    "CYBERSOURCE_URL": "https://testsecureacceptance.cybersource.com/silent/pay",
-                    "SUPPORT_URL": "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/support",
-                },
-                "development": {
-                    "SUPPORT_URL": "http://{{ LMS_HOST }}:8000/support",
-                },
-            },
-        },
     },
     "unique": {
         "MYSQL_PASSWORD": "{{ 8|random_string }}",
