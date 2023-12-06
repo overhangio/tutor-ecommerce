@@ -1,0 +1,1 @@
+- [Bugfix] Switch ecommerce MFE port from 1996 to 7296, as it clashes with the new learner dashboard. (by @regisb)
