@@ -18,3 +18,12 @@ instructions, because git commits are used to generate release notes:
 -->
 
 <!-- scriv-insert-here -->
+
+<a id='changelog-16.0.1'></a>
+## v16.0.1 (2023-12-08)
+
+- [Improvement] Add a changelog file to this plugin. (by @regisb)
+- [Feature] Improve support of auto-mounted ecommerce repository. (by @regisb)
+- [Improvement] Added Typing to code, Makefile and test action to the repository and formatted code with Black and isort. (by @CodeWithEmad)
+- [Feature] Add patch ecommerce-dockerfile-pre-assets. (by @igobranco)
+- [Bugfix] Switch ecommerce MFE port from 1996 to 7296, as it clashes with the new learner dashboard. (by @regisb)
