@@ -1,6 +1,6 @@
 - name: ecommerce-settings
-  files:
-    - plugins/ecommerce/apps/ecommerce/settings/production.py
+  files:{% for file in "ecommerce/apps/ecommerce/settings"|walk_templates %}
+  - plugins/{{ file }}{% endfor %}
 - name: ecommerce-worker-settings
-  files:
-    - plugins/ecommerce/apps/ecommerce-worker/settings/production.py
+  files:{% for file in "ecommerce/apps/ecommerce-worker/settings"|walk_templates %}
+  - plugins/{{ file }}{% endfor %}
