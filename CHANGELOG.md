@@ -19,6 +19,11 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-16.0.2'></a>
+## v16.0.2 (2023-12-09)
+
+[Bugfix] Mounted settings in kubernetes. (by @hoffmannkrzysztof)
+
 <a id='changelog-16.0.1'></a>
 ## v16.0.1 (2023-12-08)
 
