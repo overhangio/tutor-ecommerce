@@ -1,5 +1,6 @@
 ./manage.py migrate --noinput
 ./manage.py oscar_populate_countries --initial-only
+./manage.py waffle_switch allow_missing_lms_user_id on --create
 
 {% for app_name, app in iter_mfes() %}
 {% if app_name == "payment" %}
