@@ -19,6 +19,11 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-16.0.4'></a>
+## v16.0.4 (2023-12-11)
+
+- [Bugfix] Fix 500 internal server error due to lms_user_id not found on accessing the ecommerce admin panel. (by @Faraz32123)
+
 <a id='changelog-16.0.3'></a>
 ## v16.0.3 (2023-12-11)
 
