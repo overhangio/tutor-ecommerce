@@ -19,6 +19,11 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-16.0.3'></a>
+## v16.0.3 (2023-12-11)
+
+- [Bugfix] Fix error during init task: "'tuple object' has no attribute 'name'". (by @regisb)
+
 <a id='changelog-16.0.2'></a>
 ## v16.0.2 (2023-12-09)
 
