@@ -2,15 +2,16 @@
 ###### Minimal image with base system requirements for most stages
 FROM docker.io/ubuntu:20.04 as minimal
 
+ENV DEBIAN_FRONTEND=noninteractive
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt update && \
-    apt install -y curl git-core language-pack-en
+    apt install -y curl gettext git-core language-pack-en
 
 ###### Checkout code
 FROM minimal as checkout
 
-ARG ECOMMERCE_REPOSITORY=https://github.com/edx/ecommerce.git
+ARG ECOMMERCE_REPOSITORY=https://github.com/openedx/ecommerce.git
 ARG ECOMMERCE_VERSION='{{ OPENEDX_COMMON_VERSION }}'
 RUN mkdir -p /openedx/ecommerce && \
     git clone $ECOMMERCE_REPOSITORY --branch $ECOMMERCE_VERSION --depth 1 /openedx/ecommerce
@@ -78,6 +79,9 @@ RUN cd /openedx/requirements/ \
 
 {% for extra_requirement in ECOMMERCE_EXTRA_PIP_REQUIREMENTS %}RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} pip install '{{ extra_requirement }}'
 {% endfor %}
+
+RUN atlas pull --repository="{{ ATLAS_REPOSITORY }}" --revision="{{ ATLAS_REVISION }}" {{ ATLAS_OPTIONS }} translations/ecommerce/ecommerce/conf/locale:ecommerce/conf/locale
+RUN python manage.py compilemessages
 
 {{ patch("ecommerce-dockerfile-pre-assets") }}
 
