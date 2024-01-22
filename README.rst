@@ -82,7 +82,7 @@ To enable the `Cybersource <https://cybersource.com>`__ payment processor, two k
 
 The ``merchant_id`` setting corresponds to your Merchant ID.
 
-If you are running in production, you need to change the ``flex-run-environment`` value in the configuration file as well. You should change the ``flex-run-environment`` value to ``cybersource.environment.production``
+If you are running in production, you need to change the ``flex_run_environment`` value in the configuration file as well. You should change the ``flex_run_environment`` value to ``cybersource.environment.production``
 
 Operations
 ----------
