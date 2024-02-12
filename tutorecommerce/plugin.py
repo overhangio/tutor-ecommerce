@@ -4,7 +4,7 @@ import os
 import typing as t
 from glob import glob
 
-import pkg_resources
+import importlib_resources
 from tutor import hooks as tutor_hooks
 from tutor.__about__ import __version_suffix__
 from tutormfe.hooks import MFE_APPS, MFE_ATTRS_TYPE
@@ -88,7 +88,7 @@ def _add_ecommerce_mfe_apps(
 for service in ("mysql", "lms", "ecommerce"):
     with open(
         os.path.join(
-            pkg_resources.resource_filename("tutorecommerce", "templates"),
+            str(importlib_resources.files("tutorecommerce") / "templates"),
             "ecommerce",
             "tasks",
             service,
@@ -156,7 +156,7 @@ for mfe in ["orders", "payment"]:
 ####### Boilerplate code
 # Add the "templates" folder as a template root
 tutor_hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(
-    pkg_resources.resource_filename("tutorecommerce", "templates")
+    str(importlib_resources.files("tutorecommerce") / "templates")
 )
 # Render the "build" and "apps" folders
 tutor_hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
@@ -168,7 +168,7 @@ tutor_hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
 # Load patches from files
 for path in glob(
     os.path.join(
-        pkg_resources.resource_filename("tutorecommerce", "patches"),
+        str(importlib_resources.files("tutorecommerce") / "patches"),
         "*",
     )
 ):
