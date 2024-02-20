@@ -9,6 +9,9 @@ ecommerce:
   volumes:
     # editable requirements
     - ../plugins/ecommerce/build/ecommerce/requirements:/openedx/requirements
+    {%- for mount in iter_mounts(MOUNTS, "ecommerce") %}
+    - {{ mount }}
+    {%- endfor %}
   networks:
     default:
       aliases:
