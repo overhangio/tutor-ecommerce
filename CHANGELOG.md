@@ -19,6 +19,15 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-17.0.1'></a>
+## v17.0.1 (2024-03-01)
+
+- [Improvement] Added flex_run_environment setting variable for cybersource payment. Updated docs for it as well. (by @Danyal-Faheem)
+
+- [Bugfix] Make plugin compatible with Python 3.12 by removing dependency on `pkg_resources`. (by @regisb)
+
+- [Bugfix] Add forward slash at the end of payment page url. Payment page appears to be blank without forward slash in production. (by @Faraz32123)
+
 <a id='changelog-17.0.0'></a>
 ## v17.0.0 (2023-12-09)
 
