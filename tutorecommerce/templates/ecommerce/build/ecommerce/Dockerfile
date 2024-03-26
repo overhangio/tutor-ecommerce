@@ -32,7 +32,8 @@ FROM minimal as python
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt update && \
-    apt install -y libmysqlclient-dev libssl-dev python3 python3-pip python3-venv
+    apt install -y libmysqlclient-dev libssl-dev build-essential \
+    libsqlite3-dev libffi-dev
 
 ARG APP_USER_ID=1000
 RUN if [ "$APP_USER_ID" = 0 ]; then echo "app user may not be root" && false; fi
@@ -42,14 +43,25 @@ USER ${APP_USER_ID}
 # Create cache dir. Otherwise, for some reason, it becomes owned by root.
 RUN mkdir /openedx/.cache
 
-# Create python venv
-RUN python3 -m venv /openedx/venv/
+# Install pyenv
+# https://www.python.org/downloads/
+# https://github.com/pyenv/pyenv/releases
+ARG PYTHON_VERSION=3.12.2
+ENV PYENV_ROOT /opt/pyenv
+USER root
+RUN git clone https://github.com/pyenv/pyenv $PYENV_ROOT --branch v2.3.36 --depth 1
+# Install Python
+RUN $PYENV_ROOT/bin/pyenv install $PYTHON_VERSION
+USER app
+
+# Create virtualenv
+RUN $PYENV_ROOT/versions/$PYTHON_VERSION/bin/python -m venv /openedx/venv
 ENV PATH "/openedx/venv/bin:$PATH"
 RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} pip install \
     # https://pypi.org/project/setuptools/
     # https://pypi.org/project/pip/
     # https://pypi.org/project/wheel/
-    setuptools==68.2.2 pip==23.2.1 wheel==0.41.2
+    setuptools==69.1.1 pip==24.0 wheel==0.43.0
 
 # Install a recent version of nodejs
 # https://pypi.org/project/nodeenv
@@ -69,7 +81,7 @@ RUN --mount=type=cache,target=/openedx/.cache/bower,sharing=shared,uid=${APP_USE
 # python requirements
 RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} pip install -r requirements.txt
 # https://pypi.org/project/uWSGI/
-RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} pip install uwsgi==2.0.21
+RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} pip install uwsgi==2.0.24
 
 # Install private requirements: this is useful for installing custom payment processors.
 COPY --chown=app:app ./requirements/ /openedx/requirements
