@@ -48,6 +48,7 @@ RUN mkdir /openedx/.cache
 # https://github.com/pyenv/pyenv/releases
 ARG PYTHON_VERSION=3.12.2
 ENV PYENV_ROOT /opt/pyenv
+# root user is required for below 2 steps, as app user gets permission denied.
 USER root
 RUN git clone https://github.com/pyenv/pyenv $PYENV_ROOT --branch v2.3.36 --depth 1
 # Install Python
