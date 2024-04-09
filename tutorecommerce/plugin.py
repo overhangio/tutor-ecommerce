@@ -72,11 +72,11 @@ def _add_ecommerce_mfe_apps(
     apps.update(
         {
             "orders": {
-                "repository": "https://github.com/edx/frontend-app-ecommerce.git",
+                "repository": "https://github.com/openedx/frontend-app-ecommerce.git",
                 "port": 7296,
             },
             "payment": {
-                "repository": "https://github.com/edx/frontend-app-payment.git",
+                "repository": "https://github.com/openedx/frontend-app-payment.git",
                 "port": 1998,
             },
         }
