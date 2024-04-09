@@ -19,6 +19,13 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-17.0.2'></a>
+## v17.0.2 (2024-04-09)
+
+- [Feature] Make it possible to use mounts for a local development. (by @cmltawt0)
+
+- [bugFix] Change the ecommerce MFEs remotes from `edx` to `openedx`. (by @christopappas)
+
 <a id='changelog-17.0.1'></a>
 ## v17.0.1 (2024-03-01)
 
