@@ -39,4 +39,4 @@ RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install \
 RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install -r requirements/production.txt
 
 ENV WORKER_CONFIGURATION_MODULE ecommerce_worker.settings.production
-CMD celery worker --app=ecommerce_worker.celery_app:app --loglevel=info  --maxtasksperchild 100 --queue=fulfillment,email_marketing
+CMD celery --app=ecommerce_worker.celery_app:app worker --loglevel=info --max-tasks-per-child=100 --queues=fulfillment,email_marketing
