@@ -1,7 +1,7 @@
 E-Commerce plugin for `Tutor <https://docs.tutor.edly.io>`_
 ===============================================================
 
-This is a plugin for `Tutor <https://docs.tutor.edly.io>`_ that integrates the `E-Commerce <https://github.com/edx/ecommerce/>`__ application in an Open edX platform.
+This is a plugin for `Tutor <https://docs.tutor.edly.io>`_ that integrates the `E-Commerce <https://github.com/openedx/ecommerce/>`__ application in an Open edX platform.
 
 Installation
 ------------
