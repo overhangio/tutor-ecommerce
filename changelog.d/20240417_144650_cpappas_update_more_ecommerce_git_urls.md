@@ -1,0 +1,1 @@
+- [Improvement] Change ecommerce and ecommerce-worker remotes from `edx` to `openedx`. (by @christopappas)
