@@ -19,6 +19,15 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-18.0.0'></a>
+## v18.0.0 (2024-05-15)
+
+- 💥[Feature] Upgrade to Redwood. (by @Faraz32123)
+- [Feature] Add support to `atlas pull` - FC-0012 project, OEP-58. (by @shadinaif)
+- [Improvement] Change ecommerce and ecommerce-worker remotes from `edx` to `openedx`. (by @christopappas)
+- 💥[Feature] Upgrade Python version to 3.12.2. (by @Faraz32123)
+- [BugFix] Fix wrong mime type by adding mime-support dependency. (by @Faraz32123)
+
 <a id='changelog-17.0.2'></a>
 ## v17.0.2 (2024-04-09)
 
