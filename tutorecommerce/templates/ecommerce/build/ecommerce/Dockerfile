@@ -33,7 +33,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt update && \
     apt install -y libmysqlclient-dev libssl-dev build-essential \
-    libsqlite3-dev libffi-dev mime-support
+    libsqlite3-dev libffi-dev mime-support pkg-config
 
 ARG APP_USER_ID=1000
 RUN if [ "$APP_USER_ID" = 0 ]; then echo "app user may not be root" && false; fi
