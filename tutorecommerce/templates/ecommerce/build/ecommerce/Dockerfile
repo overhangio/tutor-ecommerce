@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.4
 ###### Minimal image with base system requirements for most stages
-FROM docker.io/ubuntu:20.04 as minimal
+FROM docker.io/ubuntu:20.04 AS minimal
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
@@ -9,7 +9,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt install -y curl gettext git-core language-pack-en
 
 ###### Checkout code
-FROM minimal as checkout
+FROM minimal AS checkout
 
 ARG ECOMMERCE_REPOSITORY=https://github.com/openedx/ecommerce.git
 ARG ECOMMERCE_VERSION='{{ OPENEDX_COMMON_VERSION }}'
@@ -23,11 +23,11 @@ RUN git config --global user.email "tutor@overhang.io" \
 ##### Empty layer with just the repo at the root.
 # This is useful when overriding the build context with a host repo:
 # docker build --build-context /path/to/ecommerce
-FROM scratch as ecommerce-src
+FROM scratch AS ecommerce-src
 COPY --from=checkout /openedx/ecommerce /
 
 ###### Install python and virtual environment
-FROM minimal as python
+FROM minimal AS python
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
@@ -47,7 +47,7 @@ RUN mkdir /openedx/.cache
 # https://www.python.org/downloads/
 # https://github.com/pyenv/pyenv/releases
 ARG PYTHON_VERSION=3.12.2
-ENV PYENV_ROOT /opt/pyenv
+ENV PYENV_ROOT=/opt/pyenv
 # root user is required for below 2 steps, as app user gets permission denied.
 USER root
 RUN git clone https://github.com/pyenv/pyenv $PYENV_ROOT --branch v2.3.36 --depth 1
@@ -57,7 +57,7 @@ USER app
 
 # Create virtualenv
 RUN $PYENV_ROOT/versions/$PYTHON_VERSION/bin/python -m venv /openedx/venv
-ENV PATH "/openedx/venv/bin:$PATH"
+ENV PATH=/openedx/venv/bin:$PATH
 RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} pip install \
     # https://pypi.org/project/setuptools/
     # https://pypi.org/project/pip/
@@ -68,7 +68,7 @@ RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_
 # https://pypi.org/project/nodeenv
 RUN pip install nodeenv==1.8.0
 RUN nodeenv /openedx/nodeenv --node=16.20.0 --prebuilt
-ENV PATH /openedx/nodeenv/bin:${PATH}
+ENV PATH=/openedx/nodeenv/bin:${PATH}
 
 # Copy ecommerce source code
 COPY --from=ecommerce-src --chown=app:app / /openedx/ecommerce
@@ -100,7 +100,7 @@ RUN python manage.py compilemessages
 
 # Collect static assets (aka: "make static")
 COPY --chown=app:app assets.py ./ecommerce/settings/assets.py
-ENV DJANGO_SETTINGS_MODULE ecommerce.settings.assets
+ENV DJANGO_SETTINGS_MODULE=ecommerce.settings.assets
 RUN python3 manage.py update_assets --skip-collect
 RUN ./node_modules/.bin/r.js -o build.js
 RUN python3 manage.py collectstatic --noinput
@@ -108,7 +108,7 @@ RUN python3 manage.py compress --force
 
 # Setup minimal yml config file, which is required by production settings
 RUN echo "{}" > /openedx/config.yml
-ENV ECOMMERCE_CFG /openedx/config.yml
+ENV ECOMMERCE_CFG=/openedx/config.yml
 
 EXPOSE 8000
 CMD uwsgi \

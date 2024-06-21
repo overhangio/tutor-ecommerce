@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.4
 ###### Minimal image with base system requirements for most stages
-FROM docker.io/ubuntu:20.04 as minimal
+FROM docker.io/ubuntu:20.04 AS minimal
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
@@ -20,7 +20,7 @@ WORKDIR /openedx/ecommerce_worker
 # https://www.python.org/downloads/
 # https://github.com/pyenv/pyenv/releases
 ARG PYTHON_VERSION=3.12.2
-ENV PYENV_ROOT /opt/pyenv
+ENV PYENV_ROOT=/opt/pyenv
 # root user is required for below 2 steps, as app user gets permission denied.
 USER root
 RUN git clone https://github.com/pyenv/pyenv $PYENV_ROOT --branch v2.3.36 --depth 1
@@ -30,7 +30,7 @@ USER app
 
 # Create virtualenv
 RUN $PYENV_ROOT/versions/$PYTHON_VERSION/bin/python -m venv ../venv/
-ENV PATH "/openedx/venv/bin:$PATH"
+ENV PATH=/openedx/venv/bin:$PATH
 RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install \
     # https://pypi.org/project/setuptools/
     # https://pypi.org/project/pip/
@@ -38,5 +38,5 @@ RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install \
     setuptools==69.1.1 pip==24.0 wheel==0.43.0
 RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install -r requirements/production.txt
 
-ENV WORKER_CONFIGURATION_MODULE ecommerce_worker.settings.production
+ENV WORKER_CONFIGURATION_MODULE=ecommerce_worker.settings.production
 CMD celery --app=ecommerce_worker.celery_app:app worker --loglevel=info --max-tasks-per-child=100 --queues=fulfillment,email_marketing
