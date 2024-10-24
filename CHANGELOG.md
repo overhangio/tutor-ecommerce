@@ -19,6 +19,15 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-19.0.0'></a>
+## v19.0.0 (2024-10-24)
+
+- 💥[Feature] Upgrade to Sumac. (by @Faraz32123)
+- [BugFix] Updating the uwsgi version to the latest fixes `uwsgi: error while loading shared libraries: libpython3.12.so.1.0: cannot open shared object file: No such file or directory`. (by @Faraz32123)
+- [Bugfix] Fix ecommerce image build, which was failing because of a missing pkg-config apt package. (by @regisb)
+- [Bugfix] Fix legacy warnings during Docker build. (by @regisb)
+
+
 <a id='changelog-18.0.0'></a>
 ## v18.0.0 (2024-05-15)
 
