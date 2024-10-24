@@ -82,7 +82,7 @@ RUN --mount=type=cache,target=/openedx/.cache/bower,sharing=shared,uid=${APP_USE
 # python requirements
 RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} pip install -r requirements.txt
 # https://pypi.org/project/uWSGI/
-RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} pip install uwsgi==2.0.24
+RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} pip install uwsgi==2.0.27
 
 # Install private requirements: this is useful for installing custom payment processors.
 COPY --chown=app:app ./requirements/ /openedx/requirements
