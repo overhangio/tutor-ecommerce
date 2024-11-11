@@ -1,3 +1,8 @@
+⛔️ WARNING
+==========
+
+This plugin is deprecated as the underlying e-commerce repositories have been archived. For more details, please refer to the deprecation ticket: [tutor-ecommerce deprecation ticket](https://github.com/overhangio/tutor-ecommerce/issues/83).
+
 E-Commerce plugin for `Tutor <https://docs.tutor.edly.io>`_
 ===============================================================
 

@@ -19,6 +19,13 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-19.0.0'></a>
+## v19.0.0 (2024-12-16)
+
+- 💥[Feature] Upgrade to Sumac. (by @Faraz32123)
+  - tutor-ecommerce will be deprecated with this release as the underlying e-commerce repositories have been archived. For more details, please refer to the deprecation ticket .i.e. https://github.com/overhangio/tutor-ecommerce/issues/83.
+- [BugFix] Updating the uwsgi version to the latest fixes `uwsgi: error while loading shared libraries: libpython3.12.so.1.0: cannot open shared object file: No such file or directory`. (by @Faraz32123)
+
 <a id='changelog-18.0.1'></a>
 ## v18.0.1 (2024-12-12)
 
