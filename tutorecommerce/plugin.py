@@ -11,7 +11,7 @@ from tutormfe.hooks import MFE_APPS, MFE_ATTRS_TYPE
 
 from .__about__ import __version__
 
-# Handle version suffix in nightly mode, just like tutor core
+# Handle version suffix in main mode, just like tutor core
 if __version_suffix__:
     __version__ += "-" + __version_suffix__
 
