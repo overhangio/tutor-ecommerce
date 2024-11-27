@@ -161,4 +161,4 @@ Pull requests are welcome! Please read the `"contributing" section from the Tuto
 License
 -------
 
-This work is licensed under the terms of the `GNU Affero General Public License (AGPL) <https://github.com/overhangio/tutor-ecommerce/blob/master/LICENSE.txt>`_.
+This work is licensed under the terms of the `GNU Affero General Public License (AGPL) <https://github.com/overhangio/tutor-ecommerce/blob/release/LICENSE.txt>`_.
