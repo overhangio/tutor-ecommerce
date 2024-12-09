@@ -24,6 +24,10 @@ instructions, because git commits are used to generate release notes:
 
 - 💥[Feature] Upgrade to Sumac. (by @Faraz32123)
   - tutor-ecommerce will be deprecated with this release as the underlying e-commerce repositories have been archived. For more details, please refer to the deprecation ticket .i.e. https://github.com/overhangio/tutor-ecommerce/issues/83.
+- 💥 [Deprecation] Drop support for python 3.8 and set Python 3.9 as the minimum supported python version. (by @Faraz32123)
+- 💥[Improvement] Rename Tutor's two branches (by @DawoudSheraz):
+  * Rename **master** to **release**, as this branch runs the latest official Open edX release tag.
+  * Rename **nightly** to **main**, as this branch runs the Open edX master branches, which are the basis for the next Open edX release.
 - [BugFix] Updating the uwsgi version to the latest fixes `uwsgi: error while loading shared libraries: libpython3.12.so.1.0: cannot open shared object file: No such file or directory`. (by @Faraz32123)
 
 <a id='changelog-18.0.1'></a>
