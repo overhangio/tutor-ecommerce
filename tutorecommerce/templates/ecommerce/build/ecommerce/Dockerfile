@@ -11,8 +11,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 ###### Checkout code
 FROM minimal AS checkout
 
-ARG ECOMMERCE_REPOSITORY=https://github.com/openedx/ecommerce.git
-ARG ECOMMERCE_VERSION='{{ OPENEDX_COMMON_VERSION }}'
+ARG ECOMMERCE_REPOSITORY=https://github.com/openedx-unsupported/ecommerce.git
+ARG ECOMMERCE_VERSION='open-release/sumac.master'
 RUN mkdir -p /openedx/ecommerce && \
     git clone $ECOMMERCE_REPOSITORY --branch $ECOMMERCE_VERSION --depth 1 /openedx/ecommerce
 
@@ -82,7 +82,7 @@ RUN --mount=type=cache,target=/openedx/.cache/bower,sharing=shared,uid=${APP_USE
 # python requirements
 RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} pip install -r requirements.txt
 # https://pypi.org/project/uWSGI/
-RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} pip install uwsgi==2.0.24
+RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared,uid=${APP_USER_ID} pip install uwsgi==2.0.27
 
 # Install private requirements: this is useful for installing custom payment processors.
 COPY --chown=app:app ./requirements/ /openedx/requirements
