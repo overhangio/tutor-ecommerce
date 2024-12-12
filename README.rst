@@ -4,7 +4,7 @@ E-Commerce plugin for `Tutor <https://docs.tutor.edly.io>`_
 This is a plugin for `Tutor <https://docs.tutor.edly.io>`_ that integrates the `E-Commerce <https://github.com/openedx/ecommerce/>`__ application in an Open edX platform.
 
 ⛔️ WARNING
-==========
+===========
 
 e-commerce and e-commerce worker are under-maintained. The Open edX community is not fixing bugs or developing new features for it. We hope to deprecate and replace it soon. For updates, `follow along on the DEPR ticket <https://github.com/openedx/public-engineering/issues/22>`_.
 
