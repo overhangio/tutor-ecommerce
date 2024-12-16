@@ -1,0 +1,2 @@
+# orders MFE does not support js plugins
+RUN rm /openedx/app/env.config.jsx

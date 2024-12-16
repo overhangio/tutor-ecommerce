@@ -1,12 +1,12 @@
+⛔️ WARNING
+===========
+
+This plugin is deprecated as the underlying e-commerce repositories have been archived. For more details, please refer to the `tutor-ecommerce DEPR ticket <https://github.com/overhangio/tutor-ecommerce/issues/83>`_ and `upstream Open edX DEPR ticket <https://github.com/openedx/public-engineering/issues/22>`_.
+
 E-Commerce plugin for `Tutor <https://docs.tutor.edly.io>`_
 ===============================================================
 
 This is a plugin for `Tutor <https://docs.tutor.edly.io>`_ that integrates the `E-Commerce <https://github.com/openedx/ecommerce/>`__ application in an Open edX platform.
-
-⛔️ WARNING
-===========
-
-e-commerce and e-commerce worker are under-maintained. The Open edX community is not fixing bugs or developing new features for it. We hope to deprecate and replace it soon. For updates, `follow along on the DEPR ticket <https://github.com/openedx/public-engineering/issues/22>`_.
 
 Installation
 ------------
@@ -95,17 +95,17 @@ Operations
 Creating a user
 ~~~~~~~~~~~~~~~
 
-The ecommerce user interface will be available at http://ecommerce.local.edly.io for a local instance, and at ``ECOMMERCE_HOST`` (by  default: ``http(s)://ecommerce.<yours lms host>``) in production. In order to run commands from the UI, a user with admin rights must be created. There are two ways to proceed. To create a brand new user in E-Commerce which will not exist in the LMS, run::
+The ecommerce user interface will be available at http://ecommerce.local.openedx.io for a local instance, and at ``ECOMMERCE_HOST`` (by  default: ``http(s)://ecommerce.<yours lms host>``) in production. In order to run commands from the UI, a user with admin rights must be created. There are two ways to proceed. To create a brand new user in E-Commerce which will not exist in the LMS, run::
 
   tutor local run ecommerce ./manage.py createsuperuser
 
-Then login with this new user at: http://ecommerce.local.edly.io/admin/
+Then login with this new user at: http://ecommerce.local.openedx.io/admin/
 
-To re-use an existing LMS user, first go to http://ecommerce.local.edly.io/login. You should be redirected to the LMS login page, then to the dashboard. Then this user must be made a staff/superuser in E-Commerce::
+To re-use an existing LMS user, first go to http://ecommerce.local.openedx.io/login. You should be redirected to the LMS login page, then to the dashboard. Then this user must be made a staff/superuser in E-Commerce::
 
     tutor local run ecommerce ./manage.py shell -c "from django.contrib.auth import get_user_model; get_user_model().objects.filter(email='USER@EMAIL.COM').update(is_staff=True, is_superuser=True)"
 
-Make sure to replace ``USER@EMAIL.COM`` by the actual user email address. You should then be able to view the Oscar dashboard at http://ecommerce.local.edly.io.
+Make sure to replace ``USER@EMAIL.COM`` by the actual user email address. You should then be able to view the Oscar dashboard at http://ecommerce.local.openedx.io.
 
 
 Custom payment processors
@@ -130,7 +130,7 @@ Then, build the image, pointing to your fork if necessary::
 Development
 ~~~~~~~~~~~
 
-When running Tutor in development mode, the ecommerce service is accessible at http://ecommerce.local.edly.io:8130.
+When running Tutor in development mode, the ecommerce service is accessible at http://ecommerce.local.openedx.io:8130.
 
 To mount a local ecommerce repository in the ecommerce container, add an auto-mounted repository with::
 
